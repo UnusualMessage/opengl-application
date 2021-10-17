@@ -15,8 +15,10 @@ namespace TransformationApplication
             GLWpfControlSettings settings = new()
             {
                 MajorVersion = 4,
-                MinorVersion = 1
+                MinorVersion = 1,
+                RenderContinuously = true
             };
+
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
         }
