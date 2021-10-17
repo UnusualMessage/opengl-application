@@ -11,12 +11,19 @@
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style x:Key="ControlSlider">
-            <Setter Property="Slider.Minimum" Value="0" />
+        <Style x:Key="PositionSlider">
+            <Setter Property="Slider.Minimum" Value="-10" />
             <Setter Property="Slider.Maximum" Value="10" />
             <Setter Property="Slider.IsSnapToTickEnabled" Value="True" />
             <Setter Property="Slider.TickFrequency" Value="1"/>
-            <Setter Property="Slider.Width" Value="150"/>
+            <Setter Property="Slider.Width" Value="160"/>
+        </Style>
+
+        <Style x:Key="RotationSlider">
+            <Setter Property="Slider.Minimum" Value="-180" />
+            <Setter Property="Slider.Maximum" Value="180" />
+            <Setter Property="Slider.TickFrequency" Value="1"/>
+            <Setter Property="Slider.Width" Value="160"/>
         </Style>
     </Window.Resources>
 
@@ -56,38 +63,34 @@
                 Margin="5 5 5 5"
                 Grid.Row="0"
                 Grid.Column="0">
-                
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="X"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="0" Margin="10,10,53,46">
+                        <Label Content="X" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Position    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Z" Margin="0 0 0 20" HorizontalAlignment="Right"/>
+                        <Label Content="Pitch (X)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Heading (Y)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Roll (Z)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Position Y"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0" Grid.ColumnSpan="2" Margin="101,10,10,46">
+                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
+                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
+                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 24"/>
+                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
+                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
+                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
                     </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Z"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Pitch (X)"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Heading (Y)"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Roll (Z)"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-                </StackPanel>
+                </Grid>
             </GroupBox>
 
             <GroupBox
@@ -96,38 +99,33 @@
                 Grid.Row="0"
                 Grid.Column="1">
 
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="X"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="0" Margin="10,10,53,44">
+                        <Label Content="X" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Position    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Z" Margin="0 0 0 20" HorizontalAlignment="Right"/>
+                        <Label Content="X" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Rotation    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Z" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Position Y"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0" Grid.ColumnSpan="2" Margin="101,10,10,44">
+                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
+                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
+                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 24"/>
+                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
+                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
+                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
                     </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Z"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="X"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Position Y"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Z"/>
-                        <Slider Style="{StaticResource ControlSlider}"/>
-                    </StackPanel>
-                </StackPanel>
-                
+                </Grid>
             </GroupBox>
         </Grid>
 
