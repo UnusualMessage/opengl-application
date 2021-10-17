@@ -6,7 +6,20 @@
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
         xmlns:local="clr-namespace:TransformationApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="MainWindow" Height="720" Width="1280"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="ControlSlider">
+            <Setter Property="Slider.Minimum" Value="0" />
+            <Setter Property="Slider.Maximum" Value="10" />
+            <Setter Property="Slider.IsSnapToTickEnabled" Value="True" />
+            <Setter Property="Slider.TickFrequency" Value="1"/>
+            <Setter Property="Slider.Width" Value="150"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25*"></RowDefinition>
@@ -42,13 +55,80 @@
                 Header="Camera"
                 Margin="5 5 5 5"
                 Grid.Row="0"
-                Grid.Column="0"/>
+                Grid.Column="0">
+                
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="X"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Position Y"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Z"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Pitch (X)"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Heading (Y)"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Roll (Z)"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
 
             <GroupBox
                 Header="Model"
                 Margin="5 5 5 5"
                 Grid.Row="0"
-                Grid.Column="1"/>
+                Grid.Column="1">
+
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="X"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Position Y"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Z"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="X"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Position Y"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Z"/>
+                        <Slider Style="{StaticResource ControlSlider}"/>
+                    </StackPanel>
+                </StackPanel>
+                
+            </GroupBox>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1">

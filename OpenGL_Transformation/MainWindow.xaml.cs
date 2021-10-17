@@ -23,13 +23,13 @@ namespace TransformationApplication
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
-            GL.ClearColor(Color4.Blue);
+            GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
-            GL.ClearColor(Color4.Blue);
+            GL.ClearColor(Color4.Red);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
     }
