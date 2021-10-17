@@ -3,9 +3,82 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
+        xmlns:local="clr-namespace:TransformationApplication"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="19*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <glWpfControl:GLWpfControl 
+            x:Name="LeftGlControl" 
+            Render="LeftGlControlOnRender"
+            Grid.Column="0"
+            Grid.Row="0"/>
 
+        <glWpfControl:GLWpfControl 
+            x:Name="RightGlControl" 
+            Render="RightGlControlOnRender"
+            Grid.Column="1"
+            Grid.Row="0"/>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <GroupBox
+                Header="Camera"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="0"/>
+
+            <GroupBox
+                Header="Model"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="1"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <GroupBox
+                Header="View Matrix"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="0"/>
+
+            <GroupBox
+                Header="Model Matrix"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="1"/>
+
+            <GroupBox
+                Header="ModelView Matrix"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="2"/>
+        </Grid>
     </Grid>
 </Window>
