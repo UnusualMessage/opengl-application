@@ -1,14 +1,18 @@
-﻿using System;
+﻿using TransformationApplication.Scenes.Base;
+using TransformationApplication.Scenes;
+
+using System;
 using System.Windows;
 
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
 using OpenTK.Wpf;
 
 namespace TransformationApplication
 {
     public partial class MainWindow : Window
     {
+        private readonly Scene _leftScene;
+        private readonly Scene _rightScene;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -19,20 +23,24 @@ namespace TransformationApplication
                 RenderContinuously = true
             };
 
+            _leftScene = new LeftScene();
+            _rightScene = new RightScene();
+
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
+
+            _leftScene.Load();
+            _rightScene.Load();
         }
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
-            GL.ClearColor(Color4.Black);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            _leftScene.Render();
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
-            GL.ClearColor(Color4.Red);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            _rightScene.Render();
         }
     }
 }
