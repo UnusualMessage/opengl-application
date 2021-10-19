@@ -5,25 +5,18 @@ using TransformationApplication.SceneObjects.Base;
 
 namespace TransformationApplication.Base
 {
-    public class SceneObjectDrawer
+    public static class SceneObjectDrawer
     {
-        private readonly SceneObject _sceneObject;
-
-        public SceneObjectDrawer(SceneObject sceneObject)
+        public static void Draw(SceneObject sceneObject, Matrix4 modelMatrix, Matrix4 viewMatrix, Matrix4 projectionMatrix)
         {
-            _sceneObject = sceneObject;
-        }
-
-        public void Draw(Matrix4 modelMatrix, Matrix4 viewMatrix, Matrix4 projectionMatrix)
-        {
-            Shader objectShader = _sceneObject.GetShader();
+            Shader objectShader = sceneObject.GetShader();
             objectShader.Use();
 
             objectShader.SetMatrix4("model", modelMatrix);
             objectShader.SetMatrix4("view", viewMatrix);
             objectShader.SetMatrix4("projection", projectionMatrix);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, _sceneObject.GetVertices().Length);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, sceneObject.GetVertices().Length / 3);
         }
     }
 }

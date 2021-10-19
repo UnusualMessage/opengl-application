@@ -23,11 +23,11 @@ namespace TransformationApplication
                 RenderContinuously = true
             };
 
-            _leftScene = new LeftScene();
-            _rightScene = new RightScene();
-
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
+
+            _leftScene = new LeftScene();
+            _rightScene = new RightScene();
 
             _leftScene.Load();
             _rightScene.Load();
@@ -35,12 +35,12 @@ namespace TransformationApplication
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
-            _leftScene.Render();
+            _leftScene.Render((int)LeftGlControl.ActualWidth, (int)LeftGlControl.ActualHeight);
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
-            _rightScene.Render();
+            _rightScene.Render((int)RightGlControl.ActualWidth, (int)RightGlControl.ActualHeight);
         }
     }
 }
