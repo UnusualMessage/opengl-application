@@ -13,6 +13,10 @@ namespace TransformationApplication
         private readonly Scene _leftScene;
         private readonly Scene _rightScene;
 
+        private float _xRotation;
+        private float _yRotation;
+        private float _zRotation;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -22,6 +26,10 @@ namespace TransformationApplication
                 MinorVersion = 1,
                 RenderContinuously = true
             };
+
+            _xRotation = (float)xRotSlider.Value;
+            _yRotation = (float)yRotSlider.Value;
+            _zRotation = (float)zRotSlider.Value;
 
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
@@ -35,12 +43,27 @@ namespace TransformationApplication
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
-            _leftScene.Render((int)LeftGlControl.ActualWidth, (int)LeftGlControl.ActualHeight);
+            _leftScene.Render((int)LeftGlControl.ActualWidth, (int)LeftGlControl.ActualHeight, _xRotation, _yRotation, _zRotation);
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
-            _rightScene.Render((int)RightGlControl.ActualWidth, (int)RightGlControl.ActualHeight);
+            _rightScene.Render((int)RightGlControl.ActualWidth, (int)RightGlControl.ActualHeight, _xRotation, _yRotation, _zRotation);
+        }
+
+        private void RotXValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _xRotation = (float)xRotSlider.Value;
+        }
+
+        private void RotYValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _yRotation = (float)yRotSlider.Value;
+        }
+
+        private void RotZValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _zRotation = (float)zRotSlider.Value;
         }
     }
 }

@@ -121,9 +121,22 @@
                         <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
                         <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
                         <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 24"/>
-                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
-                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
-                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
+                        
+                        <Slider x:Name="xRotSlider"
+                                Style="{StaticResource RotationSlider}" 
+                                ValueChanged="RotXValueChanged"
+                                Margin="0 7 0 8"/>
+
+                        <Slider x:Name="yRotSlider"
+                                Style="{StaticResource RotationSlider}" 
+                                ValueChanged="RotYValueChanged"
+                                Margin="0 7 0 8"/>
+
+                        <Slider x:Name="zRotSlider"
+                                Style="{StaticResource RotationSlider}"
+                                ValueChanged="RotZValueChanged" 
+                                Margin="0 7 0 8"/>
+
                     </StackPanel>
                 </Grid>
             </GroupBox>

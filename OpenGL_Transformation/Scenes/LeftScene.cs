@@ -41,17 +41,21 @@ namespace TransformationApplication.Scenes
             GL.Enable(EnableCap.DepthTest);
         }
 
-        public override void Render(int width, int height)
+        public override void Render(int width, int height, float xRot, float yRot, float zRot)
         {
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             foreach (SceneObject sceneObject in _sceneObjects)
             {
-                Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(45.0f));
-                model *= Matrix4.CreateRotationY((float)MathHelper.DegreesToRadians(45.0f));
-                Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new Vector3(0, 0, -3));
+                Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(xRot));
+                model *= Matrix4.CreateRotationY((float)MathHelper.DegreesToRadians(yRot));
+                model *= Matrix4.CreateRotationZ((float)MathHelper.DegreesToRadians(zRot));
+
+                Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new Vector3(0, 0, -3.0f));
+
                 Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, width / (float)height, 0.1f, 100f);
+
                 SceneObjectDrawer.Draw(sceneObject, model, view, projection);
             }
         }
