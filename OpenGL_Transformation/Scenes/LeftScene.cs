@@ -2,6 +2,7 @@
 using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.Base;
 using TransformationApplication.SceneObjects;
+using TransformationApplication.SceneObjects.Model;
 
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -41,18 +42,21 @@ namespace TransformationApplication.Scenes
             GL.Enable(EnableCap.DepthTest);
         }
 
-        public override void Render(int width, int height, float xRot, float yRot, float zRot)
+        public override void Render(int width, int height, Rotation modelRotation, Translation modelTranslation)
         {
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             foreach (SceneObject sceneObject in _sceneObjects)
             {
-                Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(xRot));
-                model *= Matrix4.CreateRotationY((float)MathHelper.DegreesToRadians(yRot));
-                model *= Matrix4.CreateRotationZ((float)MathHelper.DegreesToRadians(zRot));
+                Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(modelRotation.RotationByX));
+                model *= Matrix4.CreateRotationY((float)MathHelper.DegreesToRadians(modelRotation.RotationByY));
+                model *= Matrix4.CreateRotationZ((float)MathHelper.DegreesToRadians(modelRotation.RotationByZ));
 
-                Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new Vector3(0, 0, -3.0f));
+                Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new Vector3(
+                    modelTranslation.TranslationByX,
+                    modelTranslation.TranslationByY,
+                    -3.0f + modelTranslation.TranslationByZ));
 
                 Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, width / (float)height, 0.1f, 100f);
 

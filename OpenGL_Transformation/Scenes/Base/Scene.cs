@@ -1,8 +1,10 @@
-﻿namespace TransformationApplication.Scenes.Base
+﻿using TransformationApplication.SceneObjects.Model;
+
+namespace TransformationApplication.Scenes.Base
 {
     public abstract class Scene
     {
         public abstract void Load();
-        public abstract void Render(int width, int height, float x, float y, float z);
+        public abstract void Render(int width, int height, Rotation modelRotation, Translation modelTranslation);
     }
 }

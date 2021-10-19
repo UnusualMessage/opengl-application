@@ -118,9 +118,20 @@
 
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="0" Grid.ColumnSpan="2" Margin="101,10,10,44">
-                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
-                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
-                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 24"/>
+                        <Slider x:Name="xPosSlider"
+                                Style="{StaticResource PositionSlider}"
+                                ValueChanged="PosXValueChanged"
+                                Margin="0 7 0 7"/>
+
+                        <Slider x:Name="yPosSlider"
+                                Style="{StaticResource PositionSlider}"
+                                ValueChanged="PosYValueChanged"
+                                Margin="0 7 0 7"/>
+                        
+                        <Slider x:Name="zPosSlider"
+                                Style="{StaticResource PositionSlider}"
+                                ValueChanged="PosZValueChanged"
+                                Margin="0 7 0 24"/>
                         
                         <Slider x:Name="xRotSlider"
                                 Style="{StaticResource RotationSlider}" 

@@ -1,5 +1,6 @@
 ﻿using TransformationApplication.Scenes.Base;
 using TransformationApplication.Scenes;
+using TransformationApplication.SceneObjects.Model;
 
 using System;
 using System.Windows;
@@ -13,9 +14,8 @@ namespace TransformationApplication
         private readonly Scene _leftScene;
         private readonly Scene _rightScene;
 
-        private float _xRotation;
-        private float _yRotation;
-        private float _zRotation;
+        private readonly Rotation _modelRotation;
+        private readonly Translation _modelOffset;
 
         public MainWindow()
         {
@@ -27,9 +27,8 @@ namespace TransformationApplication
                 RenderContinuously = true
             };
 
-            _xRotation = (float)xRotSlider.Value;
-            _yRotation = (float)yRotSlider.Value;
-            _zRotation = (float)zRotSlider.Value;
+            _modelRotation = new(0, 0, 0);
+            _modelOffset = new(0, 0, 0);
 
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
@@ -43,27 +42,42 @@ namespace TransformationApplication
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
-            _leftScene.Render((int)LeftGlControl.ActualWidth, (int)LeftGlControl.ActualHeight, _xRotation, _yRotation, _zRotation);
+            _leftScene.Render((int)LeftGlControl.ActualWidth, (int)LeftGlControl.ActualHeight, _modelRotation, _modelOffset);
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
-            _rightScene.Render((int)RightGlControl.ActualWidth, (int)RightGlControl.ActualHeight, _xRotation, _yRotation, _zRotation);
+            _rightScene.Render((int)RightGlControl.ActualWidth, (int)RightGlControl.ActualHeight, _modelRotation, _modelOffset);
         }
 
         private void RotXValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _xRotation = (float)xRotSlider.Value;
+            _modelRotation.RotationByX = (float)e.NewValue;
         }
 
         private void RotYValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _yRotation = (float)yRotSlider.Value;
+            _modelRotation.RotationByY = (float)e.NewValue;
         }
 
         private void RotZValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _zRotation = (float)zRotSlider.Value;
+            _modelRotation.RotationByZ = (float)e.NewValue;
+        }
+
+        private void PosXValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _modelOffset.TranslationByX = (float)e.NewValue;
+        }
+
+        private void PosYValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _modelOffset.TranslationByY = (float)e.NewValue;
+        }
+
+        private void PosZValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _modelOffset.TranslationByZ = (float)e.NewValue;
         }
     }
 }
