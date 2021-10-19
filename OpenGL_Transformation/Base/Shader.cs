@@ -6,11 +6,10 @@ using System.IO;
 
 namespace TransformationApplication.Base
 {
-    public class Shader : IDisposable
+    public class Shader
     {
         private readonly Dictionary<string, int> _uniformLocations;
         private readonly int _handle;
-        private bool _disposed;
 
         public Shader(string vertexShaderPath, string fragmentShaderPath)
         {
@@ -103,27 +102,6 @@ namespace TransformationApplication.Base
         {
             GL.UseProgram(_handle);
             GL.Uniform3(_uniformLocations[name], data);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                GL.DeleteProgram(_handle);
-
-                _disposed = true;
-            }
-        }
-
-        ~Shader()
-        {
-            GL.DeleteProgram(_handle);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
