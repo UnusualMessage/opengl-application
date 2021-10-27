@@ -45,6 +45,8 @@ namespace TransformationApplication.Scenes
 
         public override void Render(int width, int height, Rotation modelRotation, Translation modelTranslation)
         {
+            float basicTranslation = -3.0f;
+
             GL.ClearColor(Color4.Red);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -53,11 +55,12 @@ namespace TransformationApplication.Scenes
                 Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(modelRotation.RotationByX));
                 model *= Matrix4.CreateRotationY((float)MathHelper.DegreesToRadians(modelRotation.RotationByY));
                 model *= Matrix4.CreateRotationZ((float)MathHelper.DegreesToRadians(modelRotation.RotationByZ));
-
-                Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new Vector3(
+                model *= Matrix4.CreateTranslation(new Vector3(
                     modelTranslation.TranslationByX,
                     modelTranslation.TranslationByY,
-                    -3.0f + modelTranslation.TranslationByZ));
+                    basicTranslation + modelTranslation.TranslationByZ));
+
+                Matrix4 view = Matrix4.Identity;
 
                 Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, width / (float)height, 0.1f, 100f);
 

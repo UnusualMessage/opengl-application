@@ -83,12 +83,35 @@
 
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="0" Grid.ColumnSpan="2" Margin="101,10,10,46">
-                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
-                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 7"/>
-                        <Slider Style="{StaticResource PositionSlider}" Margin="0 7 0 24"/>
-                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
-                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
-                        <Slider Style="{StaticResource RotationSlider}" Margin="0 7 0 8"/>
+                        <Slider x:Name="cameraXPosSlider"
+                                Style="{StaticResource PositionSlider}"
+                                ValueChanged="CameraXPosChanged"
+                                Margin="0 7 0 7"/>
+                        
+                        <Slider x:Name="cameraYPosSlider"
+                                Style="{StaticResource PositionSlider}"
+                                ValueChanged="CameraYPosChanged"
+                                Margin="0 7 0 7"/>
+                        
+                        <Slider x:Name="cameraZPosSlider"
+                                Style="{StaticResource PositionSlider}"
+                                ValueChanged="CameraZPosChanged"
+                                Margin="0 7 0 24"/>
+                        
+                        <Slider x:Name="cameraXRotSlider"
+                                Style="{StaticResource RotationSlider}"
+                                ValueChanged="CameraXRotChanged"
+                                Margin="0 7 0 8"/>
+                        
+                        <Slider x:Name="cameraYRotSlider" 
+                                Style="{StaticResource RotationSlider}" 
+                                ValueChanged="CameraYRotChanged" 
+                                Margin="0 7 0 8"/>
+                        
+                        <Slider x:Name="cameraZRotSlider"
+                                Style="{StaticResource RotationSlider}"
+                                ValueChanged="CameraZRotChanged"
+                                Margin="0 7 0 8"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
