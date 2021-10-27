@@ -1,10 +1,11 @@
-﻿using TransformationApplication.SceneObjects.Model;
+﻿using TransformationApplication.SceneObjects;
 
 namespace TransformationApplication.Scenes.Base
 {
     public abstract class Scene
     {
         public abstract void Load();
-        public abstract void Render(int width, int height, Rotation modelRotation, Translation modelTranslation);
+        public abstract void Render(Transformation cameraTransformation, Transformation modelTransformation);
+        public abstract void UpdateAspectRatio(float width, float height);
     }
 }

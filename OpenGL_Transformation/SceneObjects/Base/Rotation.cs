@@ -1,4 +1,4 @@
-﻿namespace TransformationApplication.SceneObjects.Model
+﻿namespace TransformationApplication.SceneObjects.Base
 {
     public class Rotation
     {
