@@ -44,6 +44,8 @@ namespace TransformationApplication.Scenes
 
             _width = width;
             _height = height;
+
+            _userCamera = new(Vector3.UnitZ * 3, AspectRatio);
         }
 
         public override void Load()
@@ -56,18 +58,30 @@ namespace TransformationApplication.Scenes
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            const float translationScale = 0.5f;
+
             foreach (SceneObject sceneObject in _sceneObjects)
             {
-                Vector3 translation = new(modelTransformation.Translation.TranslationByX,
-                    modelTransformation.Translation.TranslationByY,
-                    modelTransformation.Translation.TranslationByZ);
+                _userCamera.AspectRatio = AspectRatio;
+                
+                Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX * translationScale,
+                    modelTransformation.Translation.TranslationByY * translationScale,
+                    modelTransformation.Translation.TranslationByZ * translationScale);
+
+                Vector3 cameraTranslation = new(cameraTransformation.Translation.TranslationByX * translationScale,
+                    cameraTransformation.Translation.TranslationByY * translationScale,
+                    cameraTransformation.Translation.TranslationByZ * translationScale);
 
                 Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByX));
                 model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByY));
                 model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByZ));
-                model *= Matrix4.CreateTranslation(translation);
+                model *= Matrix4.CreateTranslation(modelTranslation);
 
-                Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new Vector3(0, 0, -3.0f));
+                _userCamera.Position = new(cameraTranslation);
+                _userCamera.Pitch = cameraTransformation.Rotation.RotationByX;
+                _userCamera.Yaw = -90.0f + cameraTransformation.Rotation.RotationByY;
+                _userCamera.Roll = cameraTransformation.Rotation.RotationByZ;
+                Matrix4 view = _userCamera.GetViewMatrix();
 
                 Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 

@@ -39,6 +39,8 @@ namespace TransformationApplication
 
             _leftScene.Load();
             _rightScene.Load();
+
+            cameraZPosSlider.Value = 10;
         }
 
         private void LeftGlControlOnRender(TimeSpan delta)
