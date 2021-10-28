@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Shaders\Common\**" />
+    <EmbeddedResource Remove="Shaders\Common\**" />
+    <None Remove="Shaders\Common\**" />
+    <Page Remove="Shaders\Common\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Shaders\Model\" />
     <Folder Include="Shaders\Field\" />
     <Folder Include="Shaders\Axis\" />
     <Folder Include="Shaders\Camera\" />
-    <Folder Include="Shaders\Common\" />
   </ItemGroup>
 
   <ItemGroup>

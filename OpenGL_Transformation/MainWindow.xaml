@@ -16,14 +16,15 @@
             <Setter Property="Slider.Maximum" Value="10" />
             <Setter Property="Slider.IsSnapToTickEnabled" Value="True" />
             <Setter Property="Slider.TickFrequency" Value="1"/>
-            <Setter Property="Slider.Width" Value="160"/>
+            <Setter Property="Slider.Width" Value="150"/>
         </Style>
 
         <Style x:Key="RotationSlider">
             <Setter Property="Slider.Minimum" Value="-180" />
             <Setter Property="Slider.Maximum" Value="180" />
+            <Setter Property="Slider.IsSnapToTickEnabled" Value="True" />
             <Setter Property="Slider.TickFrequency" Value="1"/>
-            <Setter Property="Slider.Width" Value="160"/>
+            <Setter Property="Slider.Width" Value="150"/>
         </Style>
     </Window.Resources>
 
@@ -67,13 +68,18 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="91*"/>
+                        <ColumnDefinition Width="174*"/>
+                        <ColumnDefinition Width="33*"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="229*"/>
+                        <RowDefinition Height="42*"/>
+                    </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="0"
-                                Grid.Column="0" Margin="10,10,53,46">
+                                Grid.Column="0" Margin="10,10,0,6">
                         <Label Content="X" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Position    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Z" Margin="0 0 0 20" HorizontalAlignment="Right"/>
@@ -82,38 +88,58 @@
                         <Label Content="Roll (Z)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="0" Grid.ColumnSpan="2" Margin="101,10,10,46">
+                    <StackPanel x:Name="cameraSliders"
+                                Orientation="Vertical"
+                                Grid.Row="0" Margin="6,10,10,5" Grid.Column="1">
+
                         <Slider x:Name="cameraXPosSlider"
                                 Style="{StaticResource PositionSlider}"
                                 ValueChanged="CameraXPosChanged"
                                 Margin="0 7 0 7"/>
-                        
+
                         <Slider x:Name="cameraYPosSlider"
                                 Style="{StaticResource PositionSlider}"
                                 ValueChanged="CameraYPosChanged"
                                 Margin="0 7 0 7"/>
-                        
+
                         <Slider x:Name="cameraZPosSlider"
                                 Style="{StaticResource PositionSlider}"
                                 ValueChanged="CameraZPosChanged"
                                 Margin="0 7 0 24"/>
-                        
+
                         <Slider x:Name="cameraXRotSlider"
                                 Style="{StaticResource RotationSlider}"
                                 ValueChanged="CameraXRotChanged"
                                 Margin="0 7 0 8"/>
-                        
+
                         <Slider x:Name="cameraYRotSlider" 
                                 Style="{StaticResource RotationSlider}" 
                                 ValueChanged="CameraYRotChanged" 
                                 Margin="0 7 0 8"/>
-                        
+
                         <Slider x:Name="cameraZRotSlider"
                                 Style="{StaticResource RotationSlider}"
                                 ValueChanged="CameraZRotChanged"
                                 Margin="0 7 0 8"/>
                     </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="2" 
+                                Margin="0,10,0,6">
+                        <Label Content="{Binding ElementName=cameraXPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=cameraYPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=cameraZPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 20"/>
+                        <Label Content="{Binding ElementName=cameraXRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=cameraYRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=cameraZRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                    </StackPanel>
+
+                    <Button Content="Сбросить"
+                            FontSize="20"
+                            Click="CameraResetClick" 
+                            Grid.Column="0" Grid.ColumnSpan="3"
+                            Grid.Row="1"/>
                 </Grid>
             </GroupBox>
 
@@ -125,13 +151,18 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="91*"/>
+                        <ColumnDefinition Width="174*"/>
+                        <ColumnDefinition Width="33*"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="229*"/>
+                        <RowDefinition Height="42*"/>
+                    </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="0"
-                                Grid.Column="0" Margin="10,10,53,44">
+                                Grid.Column="0" Margin="10,10,0,6">
                         <Label Content="X" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Position    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Z" Margin="0 0 0 20" HorizontalAlignment="Right"/>
@@ -140,39 +171,57 @@
                         <Label Content="Z" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="0" Grid.ColumnSpan="2" Margin="101,10,10,44">
-                        <Slider x:Name="xPosSlider"
+                    <StackPanel x:Name="modelSliders"
+                                Orientation="Vertical"
+                                Grid.Row="0" Margin="6,10,10,5" Grid.Column="1">
+                        <Slider x:Name="modelXPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="PosXValueChanged"
+                                ValueChanged="ModelXPosChanged"
                                 Margin="0 7 0 7"/>
 
-                        <Slider x:Name="yPosSlider"
+                        <Slider x:Name="modelYPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="PosYValueChanged"
+                                ValueChanged="ModelYPosChanged"
                                 Margin="0 7 0 7"/>
-                        
-                        <Slider x:Name="zPosSlider"
+
+                        <Slider x:Name="modelZPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="PosZValueChanged"
+                                ValueChanged="ModelZPosChanged"
                                 Margin="0 7 0 24"/>
-                        
-                        <Slider x:Name="xRotSlider"
-                                Style="{StaticResource RotationSlider}" 
-                                ValueChanged="RotXValueChanged"
-                                Margin="0 7 0 8"/>
 
-                        <Slider x:Name="yRotSlider"
-                                Style="{StaticResource RotationSlider}" 
-                                ValueChanged="RotYValueChanged"
-                                Margin="0 7 0 8"/>
-
-                        <Slider x:Name="zRotSlider"
+                        <Slider x:Name="modelXRotSlider"
                                 Style="{StaticResource RotationSlider}"
-                                ValueChanged="RotZValueChanged" 
+                                ValueChanged="ModelXRotChanged"
                                 Margin="0 7 0 8"/>
 
+                        <Slider x:Name="modelYRotSlider" 
+                                Style="{StaticResource RotationSlider}" 
+                                ValueChanged="ModelYRotChanged" 
+                                Margin="0 7 0 8"/>
+
+                        <Slider x:Name="modelZRotSlider"
+                                Style="{StaticResource RotationSlider}"
+                                ValueChanged="ModelZRotChanged"
+                                Margin="0 7 0 8"/>
                     </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="1" 
+                                Margin="169,10,0,6" Grid.ColumnSpan="2">
+                        <Label Content="{Binding ElementName=modelXPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=modelYPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=modelZPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 20"/>
+                        <Label Content="{Binding ElementName=modelXRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=modelYRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                        <Label Content="{Binding ElementName=modelZRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
+                    </StackPanel>
+
+                    <Button Content="Сбросить"
+                            FontSize="20"
+                            Click="ModelResetClick" 
+                            Grid.Column="0" Grid.ColumnSpan="3"
+                            Grid.Row="1"/>
                 </Grid>
             </GroupBox>
         </Grid>

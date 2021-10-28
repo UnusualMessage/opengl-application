@@ -5,9 +5,9 @@ using TransformationApplication.SceneObjects.Base;
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 using OpenTK.Wpf;
-using System.IO;
 
 namespace TransformationApplication
 {
@@ -56,32 +56,32 @@ namespace TransformationApplication
             _rightScene.Render(_cameraTransformation, _modelTransformation);
         }
 
-        private void RotXValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ModelXRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _modelTransformation.Rotation.RotationByX = (float)e.NewValue;
         }
 
-        private void RotYValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ModelYRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _modelTransformation.Rotation.RotationByY = (float)e.NewValue;
         }
 
-        private void RotZValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ModelZRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _modelTransformation.Rotation.RotationByZ = (float)e.NewValue;
         }
 
-        private void PosXValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ModelXPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _modelTransformation.Translation.TranslationByX = (float)e.NewValue;
         }
 
-        private void PosYValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ModelYPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _modelTransformation.Translation.TranslationByY = (float)e.NewValue;
         }
 
-        private void PosZValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ModelZPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _modelTransformation.Translation.TranslationByZ = (float)e.NewValue;
         }
@@ -120,6 +120,24 @@ namespace TransformationApplication
         private void RightGlControlMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Point point = e.GetPosition(RightGlControl);
+        }
+
+        private void ModelResetClick(object sender, RoutedEventArgs e)
+        {
+            foreach(Slider slider in modelSliders.Children)
+            {
+                slider.Value = 0;
+            }
+        }
+
+        private void CameraResetClick(object sender, RoutedEventArgs e)
+        {
+            foreach (Slider slider in cameraSliders.Children)
+            {
+                slider.Value = 0;
+            }
+
+            cameraZPosSlider.Value = 10;
         }
     }
 }
