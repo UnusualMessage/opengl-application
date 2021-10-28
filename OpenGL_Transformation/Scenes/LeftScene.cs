@@ -18,7 +18,7 @@ namespace TransformationApplication.Scenes
         private float _width;
         private float _height;
 
-        private readonly UserCamera _userCamera;
+        private readonly ViewCamera _camera;
 
         private readonly List<SceneObject> _sceneObjects = new();
 
@@ -45,7 +45,7 @@ namespace TransformationApplication.Scenes
             _width = width;
             _height = height;
 
-            _userCamera = new(Vector3.UnitZ * 3, AspectRatio);
+            _camera = new(Vector3.UnitZ * 3, AspectRatio);
         }
 
         public override void Load()
@@ -60,30 +60,29 @@ namespace TransformationApplication.Scenes
 
             const float translationScale = 0.5f;
 
+            Vector3 cameraTranslation = new(cameraTransformation.Translation.TranslationByX * translationScale,
+                cameraTransformation.Translation.TranslationByY * translationScale,
+                cameraTransformation.Translation.TranslationByZ * translationScale);
+
+            _camera.AspectRatio = AspectRatio;
+            _camera.Position = new(cameraTranslation);
+            _camera.Pitch = cameraTransformation.Rotation.RotationByX;
+            _camera.Yaw = -90.0f + cameraTransformation.Rotation.RotationByY;
+            _camera.Roll = cameraTransformation.Rotation.RotationByZ;
+            Matrix4 view = _camera.GetViewMatrix();
+
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
+
             foreach (SceneObject sceneObject in _sceneObjects)
             {
-                _userCamera.AspectRatio = AspectRatio;
-                
                 Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX * translationScale,
                     modelTransformation.Translation.TranslationByY * translationScale,
                     modelTransformation.Translation.TranslationByZ * translationScale);
-
-                Vector3 cameraTranslation = new(cameraTransformation.Translation.TranslationByX * translationScale,
-                    cameraTransformation.Translation.TranslationByY * translationScale,
-                    cameraTransformation.Translation.TranslationByZ * translationScale);
 
                 Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByX));
                 model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByY));
                 model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByZ));
                 model *= Matrix4.CreateTranslation(modelTranslation);
-
-                _userCamera.Position = new(cameraTranslation);
-                _userCamera.Pitch = cameraTransformation.Rotation.RotationByX;
-                _userCamera.Yaw = -90.0f + cameraTransformation.Rotation.RotationByY;
-                _userCamera.Roll = cameraTransformation.Rotation.RotationByZ;
-                Matrix4 view = _userCamera.GetViewMatrix();
-
-                Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
                 SceneObjectDrawer.Draw(sceneObject, model, view, projection);
             }

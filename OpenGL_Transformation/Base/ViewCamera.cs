@@ -4,7 +4,7 @@ using System;
 
 namespace TransformationApplication.Base
 {
-    public class UserCamera
+    public class ViewCamera
     {
         private Vector3 _front = -Vector3.UnitZ;
         private Vector3 _up = Vector3.UnitY;
@@ -15,7 +15,7 @@ namespace TransformationApplication.Base
 
         private float _fov = MathHelper.PiOver2;
 
-        public UserCamera(Vector3 position, float aspectRatio)
+        public ViewCamera(Vector3 position, float aspectRatio)
         {
             Position = position;
             AspectRatio = aspectRatio;

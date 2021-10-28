@@ -45,6 +45,7 @@
         <glWpfControl:GLWpfControl 
             x:Name="RightGlControl" 
             Render="RightGlControlOnRender"
+            Mouse.MouseMove="RightGlControlMouseMove"
             Grid.Column="1"
             Grid.Row="0"/>
 

@@ -7,6 +7,7 @@ using System;
 using System.Windows;
 
 using OpenTK.Wpf;
+using System.IO;
 
 namespace TransformationApplication
 {
@@ -114,6 +115,11 @@ namespace TransformationApplication
         private void CameraZRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _cameraTransformation.Rotation.RotationByZ = (float)e.NewValue;
+        }
+
+        private void RightGlControlMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Point point = e.GetPosition(RightGlControl);
         }
     }
 }
