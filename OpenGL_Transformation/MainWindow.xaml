@@ -84,7 +84,7 @@
                         <Label Content="Position    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Z" Margin="0 0 0 20" HorizontalAlignment="Right"/>
                         <Label Content="Pitch (X)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
-                        <Label Content="Heading (Y)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
+                        <Label Content="Yaw (Y)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Roll (Z)" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                     </StackPanel>
 
@@ -125,8 +125,8 @@
 
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="0"
-                                Grid.Column="2" 
-                                Margin="0,10,0,6">
+                                Grid.Column="1" 
+                                Margin="169,10,0,6" Grid.ColumnSpan="2">
                         <Label Content="{Binding ElementName=cameraXPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
                         <Label Content="{Binding ElementName=cameraYPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
                         <Label Content="{Binding ElementName=cameraZPosSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 20"/>

@@ -82,13 +82,11 @@ namespace TransformationApplication.Base
             _up.X = MathF.Sin(_roll);
             _up.Y = MathF.Cos(_roll);
             _up.Z = MathF.Sin(_roll);
-
             _up = Vector3.Normalize(_up);
 
             _front.X = MathF.Cos(_pitch) * MathF.Cos(_yaw);
             _front.Y = MathF.Sin(_pitch);
             _front.Z = MathF.Cos(_pitch) * MathF.Sin(_yaw);
-
             _front = Vector3.Normalize(_front);
         }
     }
