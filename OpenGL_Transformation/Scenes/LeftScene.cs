@@ -22,8 +22,8 @@ namespace TransformationApplication.Scenes
 
         public LeftScene()
         {
-            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"), Cube.Vertices));
+            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Cube.Vertices));
 
             _camera = new(Vector3.UnitZ * 3, AspectRatio);
         }
@@ -44,7 +44,7 @@ namespace TransformationApplication.Scenes
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
                 visibleObject.UpdateTransformation(modelTransformation);
-                visibleObject.Draw(view, projection);
+                visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
             }
         }
 

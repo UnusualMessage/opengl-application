@@ -14,13 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Shaders\Model\" />
-    <Folder Include="Shaders\Field\" />
-    <Folder Include="Shaders\Axis\" />
-    <Folder Include="Shaders\Camera\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="OpenTK.GLWpfControl" Version="4.1.0" />
   </ItemGroup>
 

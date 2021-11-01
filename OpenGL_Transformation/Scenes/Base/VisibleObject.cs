@@ -17,13 +17,15 @@ namespace TransformationApplication.Scenes.Base
             Vertices = vertices;
         }
 
-        public void Draw(Matrix4 view, Matrix4 projection)
+        public virtual void Draw(Matrix4 view, Matrix4 projection, Vector3 color)
         {
             Shader.Use();
 
             Shader.SetMatrix4("model", GetModelMatrix());
             Shader.SetMatrix4("view", view);
             Shader.SetMatrix4("projection", projection);
+
+            Shader.SetVector3("inputColor", color);
 
             GL.DrawArrays(PrimitiveType.Triangles, 0, Vertices.Length / 3);
         }
