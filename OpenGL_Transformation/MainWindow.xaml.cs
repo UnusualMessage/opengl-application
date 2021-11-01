@@ -2,22 +2,33 @@
 using TransformationApplication.Scenes;
 using TransformationApplication.SceneObjects;
 using TransformationApplication.SceneObjects.Base;
+using TransformationApplication.Base;
 
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Collections.Generic;
 
 using OpenTK.Wpf;
+using OpenTK.Mathematics;
 
 namespace TransformationApplication
 {
     public partial class MainWindow : Window
     {
+        private readonly List<double> _initialCameraTransformation = new() { 0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f };
+        private readonly List<double> _initialModelTransformation = new() { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
         private readonly Scene _leftScene;
         private readonly Scene _rightScene;
 
         private readonly Transformation _modelTransformation;
         private readonly Transformation _cameraTransformation;
+
+        private Vector2 _lastMousePosition;
+        private bool _firstMove;
+        private bool _mouseDown;
 
         public MainWindow()
         {
@@ -35,13 +46,10 @@ namespace TransformationApplication
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _leftScene = new LeftScene((float)LeftGlControl.Width, (float)LeftGlControl.Height);
-            _rightScene = new RightScene((float)LeftGlControl.Width, (float)LeftGlControl.Height);
+            _leftScene = new LeftScene();
+            _rightScene = new RightScene();
 
-            _leftScene.Load();
-            _rightScene.Load();
-
-            cameraZPosSlider.Value = 10;
+            cameraZPosSlider.Value = _initialCameraTransformation[2];
         }
 
         private void LeftGlControlOnRender(TimeSpan delta)
@@ -86,7 +94,6 @@ namespace TransformationApplication
             _modelTransformation.Translation.TranslationByZ = (float)e.NewValue;
         }
 
-
         private void CameraXPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _cameraTransformation.Translation.TranslationByX = (float)e.NewValue;
@@ -117,27 +124,67 @@ namespace TransformationApplication
             _cameraTransformation.Rotation.RotationByZ = (float)e.NewValue;
         }
 
-        private void RightGlControlMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void RightGlControlMouseMove(object sender, MouseEventArgs e)
         {
+            if (!_mouseDown)
+            {
+                return;
+            }
+
             Point point = e.GetPosition(RightGlControl);
+            float mouseX = (float)point.X;
+            float mouseY = (float)point.Y;
+
+            if (_firstMove)
+            {
+                _lastMousePosition = new Vector2(mouseX, mouseY);
+                _firstMove = false;
+            }
+            else
+            {
+                float xDelta = mouseX - _lastMousePosition.X;
+                float yDelta = mouseY - _lastMousePosition.Y;
+
+                _lastMousePosition = new Vector2(mouseX, mouseY);
+            }
+        }
+
+        private void RightGlControlMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _mouseDown = e.LeftButton == MouseButtonState.Pressed;
+            _firstMove = true;
+        }
+
+        private void RightGlControlMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _mouseDown = e.LeftButton == MouseButtonState.Pressed;
+            _firstMove = true;
+        }
+
+        private void RightGlControlMouseLeave(object sender, MouseEventArgs e)
+        {
+            _firstMove = true;
+            _mouseDown = false;
         }
 
         private void ModelResetClick(object sender, RoutedEventArgs e)
         {
+            int i = 0;
             foreach(Slider slider in modelSliders.Children)
             {
-                slider.Value = 0;
+                slider.Value = _initialModelTransformation[i];
+                ++i;
             }
         }
 
         private void CameraResetClick(object sender, RoutedEventArgs e)
         {
+            int i = 0;
             foreach (Slider slider in cameraSliders.Children)
             {
-                slider.Value = 0;
+                slider.Value = _initialCameraTransformation[i];
+                ++i;
             }
-
-            cameraZPosSlider.Value = 10;
         }
     }
 }

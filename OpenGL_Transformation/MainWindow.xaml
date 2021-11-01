@@ -47,6 +47,9 @@
             x:Name="RightGlControl" 
             Render="RightGlControlOnRender"
             Mouse.MouseMove="RightGlControlMouseMove"
+            Mouse.MouseDown="RightGlControlMouseDown"
+            Mouse.MouseUp="RightGlControlMouseUp"
+            Mouse.MouseLeave="RightGlControlMouseLeave"
             Grid.Column="1"
             Grid.Row="0"/>
 

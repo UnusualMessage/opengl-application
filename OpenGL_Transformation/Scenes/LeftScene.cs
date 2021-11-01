@@ -24,7 +24,7 @@ namespace TransformationApplication.Scenes
 
         private float AspectRatio => _width / _height;
 
-        public LeftScene(float width, float height)
+        public LeftScene()
         {
             _sceneObjects.Add(new Cube("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
                 "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"));
@@ -42,15 +42,7 @@ namespace TransformationApplication.Scenes
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
 
-            _width = width;
-            _height = height;
-
             _camera = new(Vector3.UnitZ * 3, AspectRatio);
-        }
-
-        public override void Load()
-        {
-            GL.Enable(EnableCap.DepthTest);
         }
 
         public override void Render(Transformation cameraTransformation, Transformation modelTransformation)
@@ -58,16 +50,14 @@ namespace TransformationApplication.Scenes
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            const float translationScale = 0.5f;
-
-            Vector3 cameraTranslation = new(cameraTransformation.Translation.TranslationByX * translationScale,
-                cameraTransformation.Translation.TranslationByY * translationScale,
-                cameraTransformation.Translation.TranslationByZ * translationScale);
+            Vector3 cameraTranslation = new(cameraTransformation.Translation.TranslationByX,
+                cameraTransformation.Translation.TranslationByY,
+                cameraTransformation.Translation.TranslationByZ);
 
             _camera.AspectRatio = AspectRatio;
             _camera.Position = new(cameraTranslation);
             _camera.Pitch = cameraTransformation.Rotation.RotationByX;
-            _camera.Yaw = -90.0f + cameraTransformation.Rotation.RotationByY;
+            _camera.Yaw = MathHelper.RadiansToDegrees(-MathHelper.PiOver2) + cameraTransformation.Rotation.RotationByY;
             _camera.Roll = cameraTransformation.Rotation.RotationByZ;
             Matrix4 view = _camera.GetViewMatrix();
 
@@ -75,9 +65,9 @@ namespace TransformationApplication.Scenes
 
             foreach (SceneObject sceneObject in _sceneObjects)
             {
-                Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX * translationScale,
-                    modelTransformation.Translation.TranslationByY * translationScale,
-                    modelTransformation.Translation.TranslationByZ * translationScale);
+                Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX,
+                    modelTransformation.Translation.TranslationByY,
+                    modelTransformation.Translation.TranslationByZ);
 
                 Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByX));
                 model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByY));

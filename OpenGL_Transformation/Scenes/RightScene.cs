@@ -20,11 +20,9 @@ namespace TransformationApplication.Scenes
 
         private readonly List<SceneObject> _sceneObjects = new();
 
-        private readonly ViewCamera _userCamera;
-
         private float AspectRatio => _width / _height;
 
-        public RightScene(float width, float height)
+        public RightScene()
         {
             _sceneObjects.Add(new Cube("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
                 "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"));
@@ -42,24 +40,15 @@ namespace TransformationApplication.Scenes
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
 
-            _width = width;
-            _height = height;
-
-            _userCamera = new(Vector3.UnitZ * 3, AspectRatio);
-        }
-
-        public override void Load()
-        {
             GL.Enable(EnableCap.DepthTest);
         }
-
+        
         public override void Render(Transformation cameraTransformation, Transformation modelTransformation)
         {
             GL.ClearColor(Color4.Gray);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 view = Matrix4.Identity * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(-45.0f));
-            view *= Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -5.0f));
+            Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new(0.0f, -5.0f, -10.0f));
 
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
@@ -72,6 +61,17 @@ namespace TransformationApplication.Scenes
                 Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByX));
                 model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByY));
                 model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByZ));
+                model *= Matrix4.CreateTranslation(translation);
+
+                SceneObjectDrawer.Draw(sceneObject, model, view, projection);
+
+                translation = new(cameraTransformation.Translation.TranslationByX,
+                    cameraTransformation.Translation.TranslationByY,
+                    cameraTransformation.Translation.TranslationByZ);
+
+                model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(cameraTransformation.Rotation.RotationByX));
+                model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(cameraTransformation.Rotation.RotationByY));
+                model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(cameraTransformation.Rotation.RotationByZ));
                 model *= Matrix4.CreateTranslation(translation);
 
                 SceneObjectDrawer.Draw(sceneObject, model, view, projection);
