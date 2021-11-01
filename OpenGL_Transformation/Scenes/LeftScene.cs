@@ -33,30 +33,17 @@ namespace TransformationApplication.Scenes
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Vector3 cameraTranslation = new(cameraTransformation.Translation.TranslationByX,
-                cameraTransformation.Translation.TranslationByY,
-                cameraTransformation.Translation.TranslationByZ);
-
             _camera.AspectRatio = AspectRatio;
-            _camera.Position = new(cameraTranslation);
-            _camera.Pitch = cameraTransformation.Rotation.RotationByX;
-            _camera.Yaw = MathHelper.RadiansToDegrees(-MathHelper.PiOver2) + cameraTransformation.Rotation.RotationByY;
-            _camera.Roll = cameraTransformation.Rotation.RotationByZ;
+            cameraTransformation.Rotation.RotationByY += MathHelper.RadiansToDegrees(-MathHelper.PiOver2);
+            _camera.UpdateTransformation(cameraTransformation);
+            cameraTransformation.Rotation.RotationByY += MathHelper.RadiansToDegrees(MathHelper.PiOver2);
 
             Matrix4 view = _camera.GetViewMatrix();
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
-                Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX,
-                    modelTransformation.Translation.TranslationByY,
-                    modelTransformation.Translation.TranslationByZ);
-
-                visibleObject.Position = modelTranslation;
-                visibleObject.Yaw = modelTransformation.Rotation.RotationByX;
-                visibleObject.Pitch = modelTransformation.Rotation.RotationByY;
-                visibleObject.Roll = modelTransformation.Rotation.RotationByZ;
-
+                visibleObject.UpdateTransformation(modelTransformation);
                 visibleObject.Draw(view, projection);
             }
         }

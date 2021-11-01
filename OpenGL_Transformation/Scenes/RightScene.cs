@@ -52,26 +52,10 @@ namespace TransformationApplication.Scenes
 
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
-                Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX,
-                    modelTransformation.Translation.TranslationByY,
-                    modelTransformation.Translation.TranslationByZ);
-
-                visibleObject.Position = modelTranslation;
-                visibleObject.Yaw = modelTransformation.Rotation.RotationByX;
-                visibleObject.Pitch = modelTransformation.Rotation.RotationByY;
-                visibleObject.Roll = modelTransformation.Rotation.RotationByZ;
-
+                visibleObject.UpdateTransformation(modelTransformation);
                 visibleObject.Draw(view, projection);
 
-                modelTranslation = new(cameraTransformation.Translation.TranslationByX,
-                    cameraTransformation.Translation.TranslationByY,
-                    cameraTransformation.Translation.TranslationByZ);
-
-                visibleObject.Position = modelTranslation;
-                visibleObject.Yaw = modelTransformation.Rotation.RotationByX;
-                visibleObject.Pitch = modelTransformation.Rotation.RotationByY;
-                visibleObject.Roll = modelTransformation.Rotation.RotationByZ;
-
+                visibleObject.UpdateTransformation(cameraTransformation);
                 visibleObject.Draw(view, projection);
             }
         }

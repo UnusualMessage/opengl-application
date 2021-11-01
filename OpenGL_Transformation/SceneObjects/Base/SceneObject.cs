@@ -60,6 +60,20 @@ namespace TransformationApplication.SceneObjects.Base
             set => _up = value;
         }
 
+        public void UpdateTransformation(Transformation transformation)
+        {
+            Position = new
+            (
+                transformation.Translation.TranslationByX,
+                transformation.Translation.TranslationByY,
+                transformation.Translation.TranslationByZ
+            );
+
+            Pitch = transformation.Rotation.RotationByX;
+            Yaw = transformation.Rotation.RotationByY;
+            Roll = transformation.Rotation.RotationByZ;
+        }
+
         private void UpdateVectors()
         {
             ApplyRoll();
