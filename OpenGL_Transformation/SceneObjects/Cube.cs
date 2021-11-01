@@ -1,11 +1,8 @@
-﻿using TransformationApplication.Base;
-using TransformationApplication.SceneObjects.Base;
-
-namespace TransformationApplication.SceneObjects
+﻿namespace TransformationApplication.SceneObjects
 {
-    public class Cube : SceneObject
+    public static class Cube
     {
-        private readonly float[] _vertices = {
+        public static readonly float[] Vertices = {
             -0.5f, -0.5f, -0.5f,
              0.5f, -0.5f, -0.5f,
              0.5f,  0.5f, -0.5f,
@@ -48,22 +45,5 @@ namespace TransformationApplication.SceneObjects
             -0.5f,  0.5f,  0.5f,
             -0.5f,  0.5f, -0.5f,
         };
-
-        private readonly Shader _shader;
-
-        public Cube(string vertexShaderPath, string fragmentShaderPath)
-        {
-            _shader = new Shader(vertexShaderPath, fragmentShaderPath);
-        }
-
-        public override float[] GetVertices()
-        {
-            return _vertices;
-        }
-
-        public override Shader GetShader()
-        {
-            return _shader;
-        }
     }
 }

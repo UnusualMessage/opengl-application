@@ -1,5 +1,4 @@
 ﻿using TransformationApplication.Scenes.Base;
-using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.Base;
 using TransformationApplication.SceneObjects;
 
@@ -12,35 +11,19 @@ namespace TransformationApplication.Scenes
 {
     public class LeftScene : Scene
     {
-        private readonly int _vertexBufferObject;
-        private readonly int _vertexArrayObject;
-
         private float _width;
         private float _height;
 
         private readonly ViewCamera _camera;
 
-        private readonly List<SceneObject> _sceneObjects = new();
+        private readonly List<VisibleObject> _visibleObjects = new();
 
         private float AspectRatio => _width / _height;
 
         public LeftScene()
         {
-            _sceneObjects.Add(new Cube("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"));
-
-            _vertexBufferObject = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-
-            GL.BufferData(BufferTarget.ArrayBuffer,
-                _sceneObjects[0].GetVertices().Length * sizeof(float),
-                _sceneObjects[0].GetVertices(), BufferUsageHint.StaticDraw);
-
-            _vertexArrayObject = GL.GenVertexArray();
-            GL.BindVertexArray(_vertexArrayObject);
-
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-            GL.EnableVertexAttribArray(0);
+            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"), Cube.Vertices));
 
             _camera = new(Vector3.UnitZ * 3, AspectRatio);
         }
@@ -59,22 +42,22 @@ namespace TransformationApplication.Scenes
             _camera.Pitch = cameraTransformation.Rotation.RotationByX;
             _camera.Yaw = MathHelper.RadiansToDegrees(-MathHelper.PiOver2) + cameraTransformation.Rotation.RotationByY;
             _camera.Roll = cameraTransformation.Rotation.RotationByZ;
-            Matrix4 view = _camera.GetViewMatrix();
 
+            Matrix4 view = _camera.GetViewMatrix();
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
-            foreach (SceneObject sceneObject in _sceneObjects)
+            foreach (VisibleObject visibleObject in _visibleObjects)
             {
                 Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX,
                     modelTransformation.Translation.TranslationByY,
                     modelTransformation.Translation.TranslationByZ);
 
-                Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByX));
-                model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByY));
-                model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByZ));
-                model *= Matrix4.CreateTranslation(modelTranslation);
+                visibleObject.Position = modelTranslation;
+                visibleObject.Yaw = modelTransformation.Rotation.RotationByX;
+                visibleObject.Pitch = modelTransformation.Rotation.RotationByY;
+                visibleObject.Roll = modelTransformation.Rotation.RotationByZ;
 
-                SceneObjectDrawer.Draw(sceneObject, model, view, projection);
+                visibleObject.Draw(view, projection);
             }
         }
 

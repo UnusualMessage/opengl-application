@@ -1,5 +1,4 @@
 ﻿using TransformationApplication.Scenes.Base;
-using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.Base;
 using TransformationApplication.SceneObjects;
 
@@ -18,21 +17,21 @@ namespace TransformationApplication.Scenes
         private float _width;
         private float _height;
 
-        private readonly List<SceneObject> _sceneObjects = new();
+        private readonly List<VisibleObject> _visibleObjects = new();
 
         private float AspectRatio => _width / _height;
 
         public RightScene()
         {
-            _sceneObjects.Add(new Cube("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"));
+            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\VertexShader.vert",
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\Model\\FragmentShader.frag"), Cube.Vertices));
 
             _vertexBufferObject = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
 
             GL.BufferData(BufferTarget.ArrayBuffer,
-                _sceneObjects[0].GetVertices().Length * sizeof(float),
-                _sceneObjects[0].GetVertices(), BufferUsageHint.StaticDraw);
+                _visibleObjects[0].Vertices.Length * sizeof(float),
+                _visibleObjects[0].Vertices, BufferUsageHint.StaticDraw);
 
             _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
@@ -49,32 +48,31 @@ namespace TransformationApplication.Scenes
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new(0.0f, -5.0f, -10.0f));
-
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
-            foreach (SceneObject sceneObject in _sceneObjects)
+            foreach (VisibleObject visibleObject in _visibleObjects)
             {
-                Vector3 translation = new(modelTransformation.Translation.TranslationByX,
+                Vector3 modelTranslation = new(modelTransformation.Translation.TranslationByX,
                     modelTransformation.Translation.TranslationByY,
                     modelTransformation.Translation.TranslationByZ);
 
-                Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByX));
-                model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByY));
-                model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(modelTransformation.Rotation.RotationByZ));
-                model *= Matrix4.CreateTranslation(translation);
+                visibleObject.Position = modelTranslation;
+                visibleObject.Yaw = modelTransformation.Rotation.RotationByX;
+                visibleObject.Pitch = modelTransformation.Rotation.RotationByY;
+                visibleObject.Roll = modelTransformation.Rotation.RotationByZ;
 
-                SceneObjectDrawer.Draw(sceneObject, model, view, projection);
+                visibleObject.Draw(view, projection);
 
-                translation = new(cameraTransformation.Translation.TranslationByX,
+                modelTranslation = new(cameraTransformation.Translation.TranslationByX,
                     cameraTransformation.Translation.TranslationByY,
                     cameraTransformation.Translation.TranslationByZ);
 
-                model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(cameraTransformation.Rotation.RotationByX));
-                model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(cameraTransformation.Rotation.RotationByY));
-                model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(cameraTransformation.Rotation.RotationByZ));
-                model *= Matrix4.CreateTranslation(translation);
+                visibleObject.Position = modelTranslation;
+                visibleObject.Yaw = modelTransformation.Rotation.RotationByX;
+                visibleObject.Pitch = modelTransformation.Rotation.RotationByY;
+                visibleObject.Roll = modelTransformation.Rotation.RotationByZ;
 
-                SceneObjectDrawer.Draw(sceneObject, model, view, projection);
+                visibleObject.Draw(view, projection);
             }
         }
 

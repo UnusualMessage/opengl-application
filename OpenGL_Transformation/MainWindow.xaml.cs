@@ -2,7 +2,6 @@
 using TransformationApplication.Scenes;
 using TransformationApplication.SceneObjects;
 using TransformationApplication.SceneObjects.Base;
-using TransformationApplication.Base;
 
 using System;
 using System.Windows;
