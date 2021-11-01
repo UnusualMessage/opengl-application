@@ -7,33 +7,33 @@ namespace TransformationApplication.SceneObjects.Base
         private const float MinBorder = -180.0f;
         private const float MaxBorder = 180.0f;
 
-        private float _rotationByX;
-        private float _rotationByY;
-        private float _rotationByZ;
+        private float _pitch;
+        private float _yaw;
+        private float _roll;
 
-        public float RotationByX
+        public float Yaw
         {
-            get => _rotationByX;
-            set => _rotationByX = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            get => _pitch;
+            set => _pitch = MathHelper.Clamp(value, MinBorder, MaxBorder);
         }
 
-        public float RotationByY
+        public float Pitch
         {
-            get => _rotationByY;
-            set => _rotationByY = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            get => _yaw;
+            set => _yaw = MathHelper.Clamp(value, MinBorder, MaxBorder);
         }
 
-        public float RotationByZ
+        public float Roll
         {
-            get => _rotationByZ;
-            set => _rotationByZ = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            get => _roll;
+            set => _roll = MathHelper.Clamp(value, MinBorder, MaxBorder);
         }
 
-        public Rotation(float x, float y, float z)
+        public Rotation(float pitch, float yaw, float roll)
         {
-            _rotationByX = x;
-            _rotationByY = y;
-            _rotationByZ = z;
+            _pitch = pitch;
+            _yaw = yaw;
+            _roll = roll;
         }
     }
 }

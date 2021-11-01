@@ -11,9 +11,6 @@ namespace TransformationApplication.Scenes
 {
     public class RightScene : Scene
     {
-        private readonly int _vertexBufferObject;
-        private readonly int _vertexArrayObject;
-
         private float _width;
         private float _height;
 
@@ -25,19 +22,6 @@ namespace TransformationApplication.Scenes
         {
             _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
                 "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Cube.Vertices));
-
-            _vertexBufferObject = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-
-            GL.BufferData(BufferTarget.ArrayBuffer,
-                _visibleObjects[0].Vertices.Length * sizeof(float),
-                _visibleObjects[0].Vertices, BufferUsageHint.StaticDraw);
-
-            _vertexArrayObject = GL.GenVertexArray();
-            GL.BindVertexArray(_vertexArrayObject);
-
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-            GL.EnableVertexAttribArray(0);
 
             GL.Enable(EnableCap.DepthTest);
         }
@@ -52,6 +36,7 @@ namespace TransformationApplication.Scenes
 
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
+                visibleObject.Bind();
                 visibleObject.UpdateTransformation(modelTransformation);
                 visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
 

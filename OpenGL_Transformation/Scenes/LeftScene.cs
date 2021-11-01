@@ -34,15 +34,16 @@ namespace TransformationApplication.Scenes
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             _camera.AspectRatio = AspectRatio;
-            cameraTransformation.Rotation.RotationByY += MathHelper.RadiansToDegrees(-MathHelper.PiOver2);
+            cameraTransformation.Rotation.Yaw += MathHelper.RadiansToDegrees(-MathHelper.PiOver2);
             _camera.UpdateTransformation(cameraTransformation);
-            cameraTransformation.Rotation.RotationByY += MathHelper.RadiansToDegrees(MathHelper.PiOver2);
+            cameraTransformation.Rotation.Yaw += MathHelper.RadiansToDegrees(MathHelper.PiOver2);
 
             Matrix4 view = _camera.GetViewMatrix();
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
+                visibleObject.Bind();
                 visibleObject.UpdateTransformation(modelTransformation);
                 visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
             }

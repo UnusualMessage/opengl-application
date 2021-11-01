@@ -8,6 +8,9 @@ namespace TransformationApplication.Scenes.Base
 {
     public class VisibleObject : SceneObject
     {
+        private readonly int _vertexBufferObject;
+        private readonly int _vertexArrayObject;
+
         public Shader Shader { get; }
         public float[] Vertices { get; }
 
@@ -15,6 +18,26 @@ namespace TransformationApplication.Scenes.Base
         {
             Shader = shader;
             Vertices = vertices;
+
+            _vertexBufferObject = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
+
+            GL.BufferData(
+                BufferTarget.ArrayBuffer,
+                Vertices.Length * sizeof(float),
+                Vertices, 
+                BufferUsageHint.StaticDraw);
+
+            _vertexArrayObject = GL.GenVertexArray();
+            GL.BindVertexArray(_vertexArrayObject);
+
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+            GL.EnableVertexAttribArray(0);
+        }
+
+        public void Bind()
+        {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
         }
 
         public virtual void Draw(Matrix4 view, Matrix4 projection, Vector3 color)

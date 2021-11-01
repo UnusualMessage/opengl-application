@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using OpenTK.Wpf;
 using OpenTK.Mathematics;
@@ -65,62 +66,62 @@ namespace TransformationApplication
 
         private void ModelXRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _modelTransformation.Rotation.RotationByX = (float)e.NewValue;
+            _modelTransformation.Rotation.Pitch = (float)e.NewValue;
         }
 
         private void ModelYRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _modelTransformation.Rotation.RotationByY = (float)e.NewValue;
+            _modelTransformation.Rotation.Yaw = (float)e.NewValue;
         }
 
         private void ModelZRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _modelTransformation.Rotation.RotationByZ = (float)e.NewValue;
+            _modelTransformation.Rotation.Roll = (float)e.NewValue;
         }
 
         private void ModelXPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _modelTransformation.Translation.TranslationByX = (float)e.NewValue;
+            _modelTransformation.Translation.X = (float)e.NewValue;
         }
 
         private void ModelYPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _modelTransformation.Translation.TranslationByY = (float)e.NewValue;
+            _modelTransformation.Translation.Y = (float)e.NewValue;
         }
 
         private void ModelZPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _modelTransformation.Translation.TranslationByZ = (float)e.NewValue;
+            _modelTransformation.Translation.Z = (float)e.NewValue;
         }
 
         private void CameraXPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _cameraTransformation.Translation.TranslationByX = (float)e.NewValue;
+            _cameraTransformation.Translation.X = (float)e.NewValue;
         }
 
         private void CameraYPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _cameraTransformation.Translation.TranslationByY = (float)e.NewValue;
+            _cameraTransformation.Translation.Y = (float)e.NewValue;
         }
 
         private void CameraZPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _cameraTransformation.Translation.TranslationByZ = (float)e.NewValue;
+            _cameraTransformation.Translation.Z = (float)e.NewValue;
         }
 
         private void CameraXRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _cameraTransformation.Rotation.RotationByX = (float)e.NewValue;
+            _cameraTransformation.Rotation.Pitch = (float)e.NewValue;
         }
 
         private void CameraYRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _cameraTransformation.Rotation.RotationByY = (float)e.NewValue;
+            _cameraTransformation.Rotation.Yaw = (float)e.NewValue;
         }
 
         private void CameraZRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _cameraTransformation.Rotation.RotationByZ = (float)e.NewValue;
+            _cameraTransformation.Rotation.Roll = (float)e.NewValue;
         }
 
         private void RightGlControlMouseMove(object sender, MouseEventArgs e)

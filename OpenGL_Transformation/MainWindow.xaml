@@ -142,7 +142,7 @@
                             FontSize="20"
                             Click="CameraResetClick" 
                             Grid.Column="0" Grid.ColumnSpan="3"
-                            Grid.Row="1"/>
+                            Grid.Row="1" Margin="10,2,10,0"/>
                 </Grid>
             </GroupBox>
 
@@ -224,7 +224,7 @@
                             FontSize="20"
                             Click="ModelResetClick" 
                             Grid.Column="0" Grid.ColumnSpan="3"
-                            Grid.Row="1"/>
+                            Grid.Row="1" Margin="10,2,10,0"/>
                 </Grid>
             </GroupBox>
         </Grid>
@@ -241,22 +241,40 @@
             </Grid.RowDefinitions>
 
             <GroupBox
-                Header="View Matrix"
-                Margin="5 5 5 5"
-                Grid.Row="0"
-                Grid.Column="0"/>
-
-            <GroupBox
                 Header="Model Matrix"
                 Margin="5 5 5 5"
                 Grid.Row="0"
-                Grid.Column="1"/>
+                Grid.Column="0">
+
+                <ListView x:Name="ModelMatrix"
+                          FontSize="10">
+
+                </ListView>
+            </GroupBox>
 
             <GroupBox
-                Header="ModelView Matrix"
+                Header="View Matrix"
                 Margin="5 5 5 5"
                 Grid.Row="0"
-                Grid.Column="2"/>
+                Grid.Column="1">
+                
+                <ListView x:Name="ViewMatrix"
+                          FontSize="10">
+
+                </ListView>
+            </GroupBox>
+
+            <GroupBox
+                Header="ViewModel Matrix"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="2">
+
+                <ListView x:Name="ViewModelMatrix"
+                          FontSize="10">
+
+                </ListView>
+            </GroupBox>
         </Grid>
     </Grid>
 </Window>

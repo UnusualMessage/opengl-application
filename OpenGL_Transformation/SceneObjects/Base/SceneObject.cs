@@ -64,14 +64,14 @@ namespace TransformationApplication.SceneObjects.Base
         {
             Position = new
             (
-                transformation.Translation.TranslationByX,
-                transformation.Translation.TranslationByY,
-                transformation.Translation.TranslationByZ
+                transformation.Translation.X,
+                transformation.Translation.Y,
+                transformation.Translation.Z
             );
 
-            Pitch = transformation.Rotation.RotationByX;
-            Yaw = transformation.Rotation.RotationByY;
-            Roll = transformation.Rotation.RotationByZ;
+            Pitch = transformation.Rotation.Pitch;
+            Yaw = transformation.Rotation.Yaw;
+            Roll = transformation.Rotation.Roll;
         }
 
         private void UpdateVectors()
