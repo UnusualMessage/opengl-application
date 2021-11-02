@@ -1,6 +1,4 @@
-﻿using TransformationApplication.SceneObjects;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using OpenTK.Mathematics;
 

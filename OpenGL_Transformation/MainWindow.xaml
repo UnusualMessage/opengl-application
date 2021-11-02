@@ -247,15 +247,15 @@
                 Grid.Column="0">
 
                 <ListView x:Name="ModelMatrix"
-                          FontSize="16">
+                          FontSize="15">
 
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="50"/>
-                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="50"/>
-                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="50"/>
-                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="30"/>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="46"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
@@ -269,15 +269,15 @@
                 Grid.Column="1">
                 
                 <ListView x:Name="ViewMatrix"
-                          FontSize="16">
+                          FontSize="15">
 
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn Header="Ox" Width="50"/>
-                                <GridViewColumn Header="Oy" Width="50"/>
-                                <GridViewColumn Header="Oz" Width="50"/>
-                                <GridViewColumn Header="T" Width="30"/>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="46"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
@@ -291,15 +291,15 @@
                 Grid.Column="2">
 
                 <ListView x:Name="ViewModelMatrix"
-                          FontSize="16">
+                          FontSize="15">
 
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn Header="Ox" Width="50"/>
-                                <GridViewColumn Header="Oy" Width="50"/>
-                                <GridViewColumn Header="Oz" Width="50"/>
-                                <GridViewColumn Header="T" Width="30"/>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="46"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>

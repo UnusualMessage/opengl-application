@@ -1,10 +1,9 @@
-﻿using TransformationApplication.SceneObjects.Base;
-using TransformationApplication.Base;
+﻿using TransformationApplication.Base;
 
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace TransformationApplication.Scenes.Base
+namespace TransformationApplication.SceneObjects.Base
 {
     public class VisibleObject : SceneObject
     {

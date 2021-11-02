@@ -1,6 +1,6 @@
-﻿using TransformationApplication.SceneObjects.Base;
+﻿using TransformationApplication.Mathematics.Base;
 
-namespace TransformationApplication.SceneObjects
+namespace TransformationApplication.Mathematics
 {
     public class Transformation
     {

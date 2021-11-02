@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace TransformationApplication.SceneObjects.Base
+namespace TransformationApplication.Mathematics.Base
 {
     public class Rotation
     {

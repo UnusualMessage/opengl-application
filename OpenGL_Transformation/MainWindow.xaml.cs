@@ -1,7 +1,7 @@
 ﻿using TransformationApplication.Scenes.Base;
 using TransformationApplication.Scenes;
-using TransformationApplication.SceneObjects;
-using TransformationApplication.SceneObjects.Base;
+using TransformationApplication.Mathematics;
+using TransformationApplication.Mathematics.Base;
 
 using System;
 using System.Windows;
@@ -20,8 +20,8 @@ namespace TransformationApplication
         private readonly List<double> _initialCameraTransformation = new() { 0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f };
         private readonly List<double> _initialModelTransformation = new() { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
-        private readonly Scene _leftScene;
-        private readonly Scene _rightScene;
+        private readonly IRenderable _leftScene;
+        private readonly IRenderable _rightScene;
 
         private readonly Transformation _modelTransformation;
         private readonly Transformation _cameraTransformation;
@@ -55,13 +55,34 @@ namespace TransformationApplication
         private void LeftGlControlOnRender(TimeSpan delta)
         {
             _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
-            _leftScene.Render(_cameraTransformation, _modelTransformation);
+            Matrix4 view = _leftScene.Render(_cameraTransformation, _modelTransformation);
+
+            ObservableCollection<MatrixRow> modelRecords = new();
+            ModelMatrix.ItemsSource = modelRecords;
+
+            TransformationMatrix matrix = new(TransformationMatrix.GetTransformationMatrix(_modelTransformation));
+
+            const int rowsCount = 4;
+            for (int i = 0; i < rowsCount; ++i)
+            {
+                modelRecords.Add(matrix[i]);
+            }
+
+            ObservableCollection<MatrixRow> viewRecords = new();
+            ViewMatrix.ItemsSource = viewRecords;
+
+            matrix = new(view);
+
+            for (int i = 0; i < rowsCount; ++i)
+            {
+                viewRecords.Add(matrix[i]);
+            }
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
             _rightScene.UpdateAspectRatio((float)RightGlControl.ActualWidth, (float)RightGlControl.ActualHeight);
-            _rightScene.Render(_cameraTransformation, _modelTransformation);
+            _ = _rightScene.Render(_cameraTransformation, _modelTransformation);
         }
 
         private void ModelXRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

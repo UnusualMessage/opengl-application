@@ -33,7 +33,9 @@ namespace TransformationApplication.Base
 
         public Matrix4 GetProjectionMatrix()
         {
-            return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 100f);
+            const float near = 0.1f;
+            const float far = 100.0f;
+            return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, near, far);
         }
     }
 }

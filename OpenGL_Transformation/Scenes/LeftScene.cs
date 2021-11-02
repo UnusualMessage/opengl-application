@@ -1,6 +1,8 @@
 ﻿using TransformationApplication.Scenes.Base;
 using TransformationApplication.Base;
 using TransformationApplication.SceneObjects;
+using TransformationApplication.SceneObjects.Base;
+using TransformationApplication.Mathematics;
 
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -9,7 +11,7 @@ using System.Collections.Generic;
 
 namespace TransformationApplication.Scenes
 {
-    public class LeftScene : Scene
+    public class LeftScene : IRenderable
     {
         private float _width;
         private float _height;
@@ -28,7 +30,7 @@ namespace TransformationApplication.Scenes
             _camera = new(Vector3.UnitZ * 3, AspectRatio);
         }
 
-        public override void Render(Transformation cameraTransformation, Transformation modelTransformation)
+        public Matrix4 Render(Transformation cameraTransformation, Transformation modelTransformation)
         {
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -47,9 +49,11 @@ namespace TransformationApplication.Scenes
                 visibleObject.UpdateTransformation(modelTransformation);
                 visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
             }
+
+            return view;
         }
 
-        public override void UpdateAspectRatio(float width, float height)
+        public void UpdateAspectRatio(float width, float height)
         {
             _width = width;
             _height = height;

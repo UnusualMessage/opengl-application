@@ -1,10 +1,12 @@
-﻿using TransformationApplication.SceneObjects;
+﻿using TransformationApplication.Mathematics;
+
+using OpenTK.Mathematics;
 
 namespace TransformationApplication.Scenes.Base
 {
-    public abstract class Scene
+    public interface IRenderable
     {
-        public abstract void Render(Transformation cameraTransformation, Transformation modelTransformation);
-        public abstract void UpdateAspectRatio(float width, float height);
+        public Matrix4 Render(Transformation cameraTransformation, Transformation modelTransformation);
+        public void UpdateAspectRatio(float width, float height);
     }
 }
