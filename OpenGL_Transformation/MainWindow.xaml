@@ -247,8 +247,18 @@
                 Grid.Column="0">
 
                 <ListView x:Name="ModelMatrix"
-                          FontSize="10">
+                          FontSize="16">
 
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="50"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="50"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="50"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="30"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </GroupBox>
 
@@ -259,8 +269,18 @@
                 Grid.Column="1">
                 
                 <ListView x:Name="ViewMatrix"
-                          FontSize="10">
+                          FontSize="16">
 
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Ox" Width="50"/>
+                                <GridViewColumn Header="Oy" Width="50"/>
+                                <GridViewColumn Header="Oz" Width="50"/>
+                                <GridViewColumn Header="T" Width="30"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </GroupBox>
 
@@ -271,8 +291,18 @@
                 Grid.Column="2">
 
                 <ListView x:Name="ViewModelMatrix"
-                          FontSize="10">
+                          FontSize="16">
 
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Ox" Width="50"/>
+                                <GridViewColumn Header="Oy" Width="50"/>
+                                <GridViewColumn Header="Oz" Width="50"/>
+                                <GridViewColumn Header="T" Width="30"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </GroupBox>
         </Grid>

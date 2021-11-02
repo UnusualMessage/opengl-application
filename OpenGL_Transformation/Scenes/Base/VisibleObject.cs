@@ -55,8 +55,8 @@ namespace TransformationApplication.Scenes.Base
 
         private Matrix4 GetModelMatrix()
         {
-            Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Yaw));
-            model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Pitch));
+            Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Pitch));
+            model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Yaw));
             model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Roll));
             model *= Matrix4.CreateTranslation(Position);
 
