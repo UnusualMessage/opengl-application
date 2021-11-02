@@ -1,4 +1,5 @@
 ﻿using TransformationApplication.SceneObjects.Base;
+using TransformationApplication.Mathematics;
 
 using OpenTK.Mathematics;
 
@@ -8,9 +9,9 @@ namespace TransformationApplication.Base
     {
         private float _fov = MathHelper.PiOver2;
 
-        public ViewCamera(Vector3 position, float aspectRatio)
+        public ViewCamera(Transformation transformation, float aspectRatio)
         {
-            Position = position;
+            Transformation = transformation.Clone();
             AspectRatio = aspectRatio;
         }
 
@@ -28,7 +29,11 @@ namespace TransformationApplication.Base
 
         public Matrix4 GetViewMatrix()
         {
-            return Matrix4.LookAt(Position, Position + Front, Up);
+            Vector3 position = new(Transformation.Translation.X,
+                Transformation.Translation.Y,
+                Transformation.Translation.Z);
+
+            return Matrix4.LookAt(position, position + Front, Up);
         }
 
         public Matrix4 GetProjectionMatrix()

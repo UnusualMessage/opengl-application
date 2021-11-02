@@ -22,12 +22,12 @@ namespace TransformationApplication.Scenes
 
         private float AspectRatio => _width / _height;
 
-        public LeftScene()
+        public LeftScene(Transformation cameraTransformation)
         {
             _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
                 "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Cube.Vertices));
 
-            _camera = new(Vector3.UnitZ * 3, AspectRatio);
+            _camera = new(cameraTransformation, AspectRatio);
         }
 
         public Matrix4 Render(Transformation cameraTransformation, Transformation modelTransformation)
@@ -36,9 +36,8 @@ namespace TransformationApplication.Scenes
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             _camera.AspectRatio = AspectRatio;
-            cameraTransformation.Rotation.Yaw += MathHelper.RadiansToDegrees(-MathHelper.PiOver2);
+            cameraTransformation.Rotation.Yaw += -90.0f;
             _camera.UpdateTransformation(cameraTransformation);
-            cameraTransformation.Rotation.Yaw += MathHelper.RadiansToDegrees(MathHelper.PiOver2);
 
             Matrix4 view = _camera.GetViewMatrix();
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);

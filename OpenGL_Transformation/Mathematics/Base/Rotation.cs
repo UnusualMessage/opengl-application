@@ -11,22 +11,41 @@ namespace TransformationApplication.Mathematics.Base
         private float _yaw;
         private float _roll;
 
-        public float Yaw
-        {
-            get => _pitch;
-            set => _pitch = MathHelper.Clamp(value, MinBorder, MaxBorder);
-        }
-
         public float Pitch
         {
+            get => _pitch;
+            set
+            {
+                float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
+                _pitch = angle;
+            }
+        }
+
+        public float Yaw
+        {
             get => _yaw;
-            set => _yaw = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            set
+            {
+                float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
+                _yaw = angle;
+            }
         }
 
         public float Roll
         {
             get => _roll;
-            set => _roll = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            set
+            {
+                float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
+                _roll = angle;
+            }
+        }
+
+        public Rotation()
+        {
+            _pitch = 0;
+            _yaw = 0;
+            _roll = 0;
         }
 
         public Rotation(float pitch, float yaw, float roll)
@@ -34,6 +53,18 @@ namespace TransformationApplication.Mathematics.Base
             _pitch = pitch;
             _yaw = yaw;
             _roll = roll;
+        }
+
+        private Rotation(Rotation rotation)
+        {
+            _pitch = rotation.Pitch;
+            _yaw = rotation.Yaw;
+            _roll = rotation.Roll;
+        }
+
+        public Rotation Clone()
+        {
+            return new Rotation(this);
         }
     }
 }

@@ -29,11 +29,30 @@ namespace TransformationApplication.Mathematics.Base
             set => _z = MathHelper.Clamp(value, MinBorder, MaxBorder);
         }
 
+        public Translation()
+        {
+            _x = 0;
+            _y = 0;
+            _z = 0;
+        }
+
         public Translation(float x, float y, float z)
         {
             _x = x;
             _y = y;
             _z = z;
+        }
+
+        private Translation(Translation translation)
+        {
+            _x = translation.X;
+            _y = translation.Y;
+            _z = translation.Z;
+        }
+
+        public Translation Clone()
+        {
+            return new Translation(this);
         }
     }
 }

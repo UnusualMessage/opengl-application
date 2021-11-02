@@ -1,4 +1,5 @@
 ﻿using TransformationApplication.Base;
+using TransformationApplication.Mathematics;
 
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
@@ -15,6 +16,7 @@ namespace TransformationApplication.SceneObjects.Base
 
         public VisibleObject(Shader shader, float[] vertices)
         {
+            Transformation = new();
             Shader = shader;
             Vertices = vertices;
 
@@ -54,12 +56,7 @@ namespace TransformationApplication.SceneObjects.Base
 
         private Matrix4 GetModelMatrix()
         {
-            Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Pitch));
-            model *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Yaw));
-            model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Roll));
-            model *= Matrix4.CreateTranslation(Position);
-
-            return model;
+            return TransformationMatrix.GetTransformationMatrix(Transformation);
         }
     }
 }

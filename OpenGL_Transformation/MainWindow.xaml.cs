@@ -40,13 +40,13 @@ namespace TransformationApplication
                 RenderContinuously = true
             };
 
-            _modelTransformation = new(new Rotation(0, 0, 0), new Translation(0, 0, 0));
-            _cameraTransformation = new(new Rotation(0, 0, 0), new Translation(0, 0, 0));
+            _modelTransformation = new(new Rotation(), new Translation());
+            _cameraTransformation = new(new Rotation(), new Translation());
 
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _leftScene = new LeftScene();
+            _leftScene = new LeftScene(_cameraTransformation);
             _rightScene = new RightScene();
 
             cameraZPosSlider.Value = _initialCameraTransformation[2];
@@ -55,7 +55,7 @@ namespace TransformationApplication
         private void LeftGlControlOnRender(TimeSpan delta)
         {
             _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
-            Matrix4 view = _leftScene.Render(_cameraTransformation, _modelTransformation);
+            Matrix4 view = _leftScene.Render(_cameraTransformation.Clone(), _modelTransformation.Clone());
 
             ObservableCollection<MatrixRow> modelRecords = new();
             ModelMatrix.ItemsSource = modelRecords;
