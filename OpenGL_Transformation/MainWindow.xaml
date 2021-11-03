@@ -1,10 +1,11 @@
 ﻿<Window x:Class="TransformationApplication.MainWindow"
+        x:Name="mainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
-        xmlns:local="clr-namespace:TransformationApplication"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
         WindowStyle="SingleBorderWindow"
@@ -92,37 +93,38 @@
                     </StackPanel>
 
                     <StackPanel x:Name="cameraSliders"
+                                DataContext="{Binding ElementName=mainWindow, Path=CameraTransformation}"
                                 Orientation="Vertical"
                                 Grid.Row="0" Margin="6,10,10,5" Grid.Column="1">
 
                         <Slider x:Name="cameraXPosSlider"
+                                Value="{Binding Path=Translation.X}"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="CameraXPosChanged"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="cameraYPosSlider"
+                                Value="{Binding Path=Translation.Y}"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="CameraYPosChanged"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="cameraZPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="CameraZPosChanged"
+                                Value="{Binding Path=Translation.Z}"
                                 Margin="0 7 0 24"/>
 
                         <Slider x:Name="cameraXRotSlider"
                                 Style="{StaticResource RotationSlider}"
-                                ValueChanged="CameraXRotChanged"
+                                Value="{Binding Path=Rotation.Pitch}"
                                 Margin="0 7 0 8"/>
 
                         <Slider x:Name="cameraYRotSlider" 
                                 Style="{StaticResource RotationSlider}" 
-                                ValueChanged="CameraYRotChanged" 
+                                Value="{Binding Path=Rotation.Yaw}"
                                 Margin="0 7 0 8"/>
 
                         <Slider x:Name="cameraZRotSlider"
                                 Style="{StaticResource RotationSlider}"
-                                ValueChanged="CameraZRotChanged"
+                                Value="{Binding Path=Rotation.Roll}"
                                 Margin="0 7 0 8"/>
                     </StackPanel>
 
@@ -175,36 +177,37 @@
                     </StackPanel>
 
                     <StackPanel x:Name="modelSliders"
+                                DataContext="{Binding ElementName=mainWindow, Path=ModelTransformation}"
                                 Orientation="Vertical"
                                 Grid.Row="0" Margin="6,10,10,5" Grid.Column="1">
                         <Slider x:Name="modelXPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="ModelXPosChanged"
+                                Value="{Binding Path=Translation.X}"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="modelYPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="ModelYPosChanged"
+                                Value="{Binding Path=Translation.Y}"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="modelZPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                ValueChanged="ModelZPosChanged"
+                                Value="{Binding Path=Translation.Z}"
                                 Margin="0 7 0 24"/>
 
                         <Slider x:Name="modelXRotSlider"
                                 Style="{StaticResource RotationSlider}"
-                                ValueChanged="ModelXRotChanged"
+                                Value="{Binding Path=Rotation.Pitch}"
                                 Margin="0 7 0 8"/>
 
                         <Slider x:Name="modelYRotSlider" 
                                 Style="{StaticResource RotationSlider}" 
-                                ValueChanged="ModelYRotChanged" 
+                                Value="{Binding Path=Rotation.Yaw}"
                                 Margin="0 7 0 8"/>
 
                         <Slider x:Name="modelZRotSlider"
                                 Style="{StaticResource RotationSlider}"
-                                ValueChanged="ModelZRotChanged"
+                                Value="{Binding Path=Rotation.Roll}"
                                 Margin="0 7 0 8"/>
                     </StackPanel>
 

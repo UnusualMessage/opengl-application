@@ -4,8 +4,8 @@ namespace TransformationApplication.Mathematics
 {
     public class Transformation
     {
-        public Rotation Rotation { get; set; }
-        public Translation Translation { get; set; }
+        public Rotation Rotation { get; }
+        public Translation Translation { get; }
 
         public Transformation()
         {

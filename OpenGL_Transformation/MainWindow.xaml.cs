@@ -17,14 +17,14 @@ namespace TransformationApplication
 {
     public partial class MainWindow : Window
     {
-        private readonly List<double> _initialCameraTransformation = new() { 0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f };
-        private readonly List<double> _initialModelTransformation = new() { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+        private readonly List<float> _initialCameraTransformation = new() { 0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f };
+        private readonly List<float> _initialModelTransformation = new() { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+        public Transformation ModelTransformation { get; }
+        public Transformation CameraTransformation { get; }
 
         private readonly IRenderable _leftScene;
         private readonly IRenderable _rightScene;
-
-        private readonly Transformation _modelTransformation;
-        private readonly Transformation _cameraTransformation;
 
         private readonly ObservableCollection<MatrixRow> _modelMatrixGrid;
         private readonly ObservableCollection<MatrixRow> _viewMatrixGrid;
@@ -36,6 +36,9 @@ namespace TransformationApplication
 
         public MainWindow()
         {
+            ModelTransformation = new(new Rotation(), new Translation());
+            CameraTransformation = new(new Rotation(), new Translation(0, 0, _initialCameraTransformation[2]));
+
             InitializeComponent();
             GLWpfControlSettings settings = new()
             {
@@ -44,16 +47,11 @@ namespace TransformationApplication
                 RenderContinuously = true
             };
 
-            _modelTransformation = new(new Rotation(), new Translation());
-            _cameraTransformation = new(new Rotation(), new Translation());
-
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _leftScene = new LeftScene(_cameraTransformation);
+            _leftScene = new LeftScene(CameraTransformation);
             _rightScene = new RightScene();
-
-            cameraZPosSlider.Value = _initialCameraTransformation[2];
 
             // ListView Init
             _modelMatrixGrid = new();
@@ -76,8 +74,8 @@ namespace TransformationApplication
         private void LeftGlControlOnRender(TimeSpan delta)
         {
             _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
-            Matrix4 view = _leftScene.Render(_cameraTransformation.Clone(), _modelTransformation.Clone());
-            Matrix4 model = TransformationMatrix.GetTransformationMatrix(_modelTransformation);
+            Matrix4 view = _leftScene.Render(CameraTransformation.Clone(), ModelTransformation.Clone());
+            Matrix4 model = TransformationMatrix.GetTransformationMatrix(ModelTransformation);
 
             UpdateGrid(_modelMatrixGrid, new(model));
             UpdateGrid(_viewMatrixGrid, new(view));
@@ -99,67 +97,7 @@ namespace TransformationApplication
         private void RightGlControlOnRender(TimeSpan delta)
         {
             _rightScene.UpdateAspectRatio((float)RightGlControl.ActualWidth, (float)RightGlControl.ActualHeight);
-            _ = _rightScene.Render(_cameraTransformation, _modelTransformation);
-        }
-
-        private void ModelXRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _modelTransformation.Rotation.Pitch = (float)e.NewValue;
-        }
-
-        private void ModelYRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _modelTransformation.Rotation.Yaw = (float)e.NewValue;
-        }
-
-        private void ModelZRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _modelTransformation.Rotation.Roll = (float)e.NewValue;
-        }
-
-        private void ModelXPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _modelTransformation.Translation.X = (float)e.NewValue;
-        }
-
-        private void ModelYPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _modelTransformation.Translation.Y = (float)e.NewValue;
-        }
-
-        private void ModelZPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _modelTransformation.Translation.Z = (float)e.NewValue;
-        }
-
-        private void CameraXPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _cameraTransformation.Translation.X = (float)e.NewValue;
-        }
-
-        private void CameraYPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _cameraTransformation.Translation.Y = (float)e.NewValue;
-        }
-
-        private void CameraZPosChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _cameraTransformation.Translation.Z = (float)e.NewValue;
-        }
-
-        private void CameraXRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _cameraTransformation.Rotation.Pitch = (float)e.NewValue;
-        }
-
-        private void CameraYRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _cameraTransformation.Rotation.Yaw = (float)e.NewValue;
-        }
-
-        private void CameraZRotChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _cameraTransformation.Rotation.Roll = (float)e.NewValue;
+            _ = _rightScene.Render(CameraTransformation, ModelTransformation);
         }
 
         private void RightGlControlMouseMove(object sender, MouseEventArgs e)
@@ -208,7 +146,7 @@ namespace TransformationApplication
         private void ModelResetClick(object sender, RoutedEventArgs e)
         {
             int i = 0;
-            foreach(Slider slider in modelSliders.Children)
+            foreach (Slider slider in modelSliders.Children)
             {
                 slider.Value = _initialModelTransformation[i];
                 ++i;
