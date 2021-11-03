@@ -26,6 +26,10 @@ namespace TransformationApplication
         private readonly Transformation _modelTransformation;
         private readonly Transformation _cameraTransformation;
 
+        private readonly ObservableCollection<MatrixRow> _modelMatrixGrid;
+        private readonly ObservableCollection<MatrixRow> _viewMatrixGrid;
+        private readonly ObservableCollection<MatrixRow> _modelViewMatrixGrid;
+
         private Vector2 _lastMousePosition;
         private bool _firstMove;
         private bool _mouseDown;
@@ -50,32 +54,45 @@ namespace TransformationApplication
             _rightScene = new RightScene();
 
             cameraZPosSlider.Value = _initialCameraTransformation[2];
+
+            // ListView Init
+            _modelMatrixGrid = new();
+            _viewMatrixGrid = new();
+            _modelViewMatrixGrid = new();
+
+            int rowsCount = 4;
+            for (int i = 0; i < rowsCount; ++i)
+            {
+                _modelMatrixGrid.Add(new MatrixRow(0, 0, 0, 0));
+                _viewMatrixGrid.Add(new MatrixRow(0, 0, 0, 0));
+                _modelViewMatrixGrid.Add(new MatrixRow(0, 0, 0, 0));
+            }
+
+            ModelMatrix.ItemsSource = _modelMatrixGrid;
+            ViewMatrix.ItemsSource = _viewMatrixGrid;
+            ViewModelMatrix.ItemsSource = _modelViewMatrixGrid;
         }
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
             _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
             Matrix4 view = _leftScene.Render(_cameraTransformation.Clone(), _modelTransformation.Clone());
+            Matrix4 model = TransformationMatrix.GetTransformationMatrix(_modelTransformation);
 
-            ObservableCollection<MatrixRow> modelRecords = new();
-            ModelMatrix.ItemsSource = modelRecords;
+            UpdateGrid(_modelMatrixGrid, new(model));
+            UpdateGrid(_viewMatrixGrid, new(view));
+            UpdateGrid(_modelViewMatrixGrid, new(model * view));
+        }
 
-            TransformationMatrix matrix = new(TransformationMatrix.GetTransformationMatrix(_modelTransformation));
-
-            const int rowsCount = 4;
+        private static void UpdateGrid(ObservableCollection<MatrixRow> grid, TransformationMatrix matrix)
+        {
+            int rowsCount = 4;
             for (int i = 0; i < rowsCount; ++i)
             {
-                modelRecords.Add(matrix[i]);
-            }
-
-            ObservableCollection<MatrixRow> viewRecords = new();
-            ViewMatrix.ItemsSource = viewRecords;
-
-            matrix = new(view);
-
-            for (int i = 0; i < rowsCount; ++i)
-            {
-                viewRecords.Add(matrix[i]);
+                grid[i].First = matrix[i].First;
+                grid[i].Second = matrix[i].Second;
+                grid[i].Third = matrix[i].Third;
+                grid[i].Fourth = matrix[i].Fourth;
             }
         }
 

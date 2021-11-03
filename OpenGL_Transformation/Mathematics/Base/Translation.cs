@@ -1,8 +1,11 @@
-﻿using OpenTK.Mathematics;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+using OpenTK.Mathematics;
 
 namespace TransformationApplication.Mathematics.Base
 {
-    public class Translation
+    public class Translation : INotifyPropertyChanged
     {
         private const float MinBorder = -10.0f;
         private const float MaxBorder = 10.0f;
@@ -11,22 +14,33 @@ namespace TransformationApplication.Mathematics.Base
         private float _y;
         private float _z;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public float X
         {
             get => _x;
-            set => _x = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            set
+            {
+                _x = MathHelper.Clamp(value, MinBorder, MaxBorder); NotifyPropertyChanged();
+            }
         }
 
         public float Y
         {
             get => _y;
-            set => _y = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            set
+            {
+                _y = MathHelper.Clamp(value, MinBorder, MaxBorder); NotifyPropertyChanged();
+            }
         }
 
         public float Z
         {
             get => _z;
-            set => _z = MathHelper.Clamp(value, MinBorder, MaxBorder);
+            set
+            {
+                _z = MathHelper.Clamp(value, MinBorder, MaxBorder); NotifyPropertyChanged();
+            }
         }
 
         public Translation()
@@ -53,6 +67,11 @@ namespace TransformationApplication.Mathematics.Base
         public Translation Clone()
         {
             return new Translation(this);
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using OpenTK.Mathematics;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+using OpenTK.Mathematics;
 
 namespace TransformationApplication.Mathematics.Base
 {
-    public class Rotation
+    public class Rotation : INotifyPropertyChanged
     {
         private const float MinBorder = -180.0f;
         private const float MaxBorder = 180.0f;
@@ -11,13 +14,15 @@ namespace TransformationApplication.Mathematics.Base
         private float _yaw;
         private float _roll;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public float Pitch
         {
             get => _pitch;
             set
             {
                 float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
-                _pitch = angle;
+                _pitch = angle; NotifyPropertyChanged();
             }
         }
 
@@ -27,7 +32,7 @@ namespace TransformationApplication.Mathematics.Base
             set
             {
                 float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
-                _yaw = angle;
+                _yaw = angle; NotifyPropertyChanged();
             }
         }
 
@@ -37,7 +42,7 @@ namespace TransformationApplication.Mathematics.Base
             set
             {
                 float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
-                _roll = angle;
+                _roll = angle; NotifyPropertyChanged();
             }
         }
 
@@ -65,6 +70,11 @@ namespace TransformationApplication.Mathematics.Base
         public Rotation Clone()
         {
             return new Rotation(this);
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,15 +1,19 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TransformationApplication.Mathematics
 {
-    public class MatrixRow
+    public class MatrixRow : INotifyPropertyChanged
     {
         private const int Digits = 2;
 
-        private readonly float _first;
-        private readonly float _second;
-        private readonly float _third;
-        private readonly float _fourth;
+        private float _first;
+        private float _second;
+        private float _third;
+        private float _fourth;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MatrixRow(float first, float second, float third, float fourth)
         {
@@ -19,9 +23,33 @@ namespace TransformationApplication.Mathematics
             _fourth = fourth;
         }
 
-        public float First => MathF.Round(_first, Digits);
-        public float Second => MathF.Round(_second, Digits);
-        public float Third => MathF.Round(_third, Digits);
-        public float Fourth => MathF.Round(_fourth, Digits);
+        public float First
+        {
+            get => MathF.Round(_first, Digits);
+            set { _first = value; NotifyPropertyChanged(); }
+        }
+
+        public float Second
+        {
+            get => MathF.Round(_second, Digits);
+            set { _second = value; NotifyPropertyChanged(); }
+        }
+
+        public float Third
+        {
+            get => MathF.Round(_third, Digits);
+            set { _third = value; NotifyPropertyChanged(); }
+        }
+
+        public float Fourth
+        {
+            get => MathF.Round(_fourth, Digits);
+            set { _fourth = value; NotifyPropertyChanged(); }
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
