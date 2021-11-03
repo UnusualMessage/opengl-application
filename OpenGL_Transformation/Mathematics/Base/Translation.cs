@@ -43,12 +43,7 @@ namespace TransformationApplication.Mathematics.Base
             }
         }
 
-        public Translation()
-        {
-            _x = 0;
-            _y = 0;
-            _z = 0;
-        }
+        public Translation() { }
 
         public Translation(float x, float y, float z)
         {
@@ -67,6 +62,13 @@ namespace TransformationApplication.Mathematics.Base
         public Translation Clone()
         {
             return new Translation(this);
+        }
+
+        public void Reset()
+        {
+            X = 0.0f;
+            Y = 0.0f;
+            Z = 0.0f;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)

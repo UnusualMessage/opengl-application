@@ -46,12 +46,7 @@ namespace TransformationApplication.Mathematics.Base
             }
         }
 
-        public Rotation()
-        {
-            _pitch = 0;
-            _yaw = 0;
-            _roll = 0;
-        }
+        public Rotation() { }
 
         public Rotation(float pitch, float yaw, float roll)
         {
@@ -70,6 +65,13 @@ namespace TransformationApplication.Mathematics.Base
         public Rotation Clone()
         {
             return new Rotation(this);
+        }
+
+        public void Reset()
+        {
+            Pitch = 0.0f;
+            Yaw = 0.0f;
+            Roll = 0.0f;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)

@@ -23,6 +23,8 @@ namespace TransformationApplication.Mathematics
             _fourth = fourth;
         }
 
+        public MatrixRow() { }
+
         public float First
         {
             get => MathF.Round(_first, Digits);

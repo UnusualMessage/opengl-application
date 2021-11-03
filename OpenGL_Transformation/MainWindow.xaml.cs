@@ -5,9 +5,7 @@ using TransformationApplication.Mathematics.Base;
 
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using OpenTK.Wpf;
@@ -17,9 +15,6 @@ namespace TransformationApplication
 {
     public partial class MainWindow : Window
     {
-        private readonly List<float> _initialCameraTransformation = new() { 0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f };
-        private readonly List<float> _initialModelTransformation = new() { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-
         public Transformation ModelTransformation { get; }
         public Transformation CameraTransformation { get; }
 
@@ -37,38 +32,27 @@ namespace TransformationApplication
         public MainWindow()
         {
             ModelTransformation = new(new Rotation(), new Translation());
-            CameraTransformation = new(new Rotation(), new Translation(0, 0, _initialCameraTransformation[2]));
+            CameraTransformation = new(new Rotation(), new Translation(0, 0, 10.0f));
 
             InitializeComponent();
+
             GLWpfControlSettings settings = new()
             {
                 MajorVersion = 4,
                 MinorVersion = 1,
                 RenderContinuously = true
             };
-
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
             _leftScene = new LeftScene(CameraTransformation);
             _rightScene = new RightScene();
 
-            // ListView Init
             _modelMatrixGrid = new();
             _viewMatrixGrid = new();
             _modelViewMatrixGrid = new();
 
-            int rowsCount = 4;
-            for (int i = 0; i < rowsCount; ++i)
-            {
-                _modelMatrixGrid.Add(new MatrixRow(0, 0, 0, 0));
-                _viewMatrixGrid.Add(new MatrixRow(0, 0, 0, 0));
-                _modelViewMatrixGrid.Add(new MatrixRow(0, 0, 0, 0));
-            }
-
-            ModelMatrix.ItemsSource = _modelMatrixGrid;
-            ViewMatrix.ItemsSource = _viewMatrixGrid;
-            ViewModelMatrix.ItemsSource = _modelViewMatrixGrid;
+            BindMatrices();
         }
 
         private void LeftGlControlOnRender(TimeSpan delta)
@@ -92,6 +76,21 @@ namespace TransformationApplication
                 grid[i].Third = matrix[i].Third;
                 grid[i].Fourth = matrix[i].Fourth;
             }
+        }
+
+        private void BindMatrices()
+        {
+            int rowsCount = 4;
+            for (int i = 0; i < rowsCount; ++i)
+            {
+                _modelMatrixGrid.Add(new MatrixRow());
+                _viewMatrixGrid.Add(new MatrixRow());
+                _modelViewMatrixGrid.Add(new MatrixRow());
+            }
+
+            modelMatrix.ItemsSource = _modelMatrixGrid;
+            viewMatrix.ItemsSource = _viewMatrixGrid;
+            modelViewMatrix.ItemsSource = _modelViewMatrixGrid;
         }
 
         private void RightGlControlOnRender(TimeSpan delta)
@@ -145,22 +144,13 @@ namespace TransformationApplication
 
         private void ModelResetClick(object sender, RoutedEventArgs e)
         {
-            int i = 0;
-            foreach (Slider slider in modelSliders.Children)
-            {
-                slider.Value = _initialModelTransformation[i];
-                ++i;
-            }
+            ModelTransformation.Reset();
         }
 
         private void CameraResetClick(object sender, RoutedEventArgs e)
         {
-            int i = 0;
-            foreach (Slider slider in cameraSliders.Children)
-            {
-                slider.Value = _initialCameraTransformation[i];
-                ++i;
-            }
+            CameraTransformation.Reset();
+            CameraTransformation.Translation.Z = 10.0f;
         }
     }
 }

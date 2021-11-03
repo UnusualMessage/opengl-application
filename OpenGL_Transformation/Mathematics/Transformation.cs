@@ -29,5 +29,21 @@ namespace TransformationApplication.Mathematics
         {
             return new Transformation(this);
         }
+
+        public void ResetRotation()
+        {
+            Rotation.Reset();
+        }
+
+        public void ResetTranslation()
+        {
+            Translation.Reset();
+        }
+
+        public void Reset()
+        {
+            ResetRotation();
+            ResetTranslation();
+        }
     }
 }

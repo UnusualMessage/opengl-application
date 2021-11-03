@@ -7,7 +7,7 @@
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="MainWindow" Height="765" Width="1280"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize">
 
@@ -240,17 +240,19 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
 
             <GroupBox
                 Header="Model Matrix"
-                Margin="5 5 5 5"
+                Margin="5,5,5,5"
                 Grid.Row="0"
                 Grid.Column="0">
 
-                <ListView x:Name="ModelMatrix"
-                          FontSize="15">
+                <ListView x:Name="modelMatrix"
+                          FontSize="15"
+                          Margin="3">
 
                     <ListView.View>
                         <GridView>
@@ -258,7 +260,7 @@
                                 <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
                                 <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
                                 <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
-                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="46"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="45"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
@@ -267,12 +269,13 @@
 
             <GroupBox
                 Header="View Matrix"
-                Margin="5 5 5 5"
+                Margin="5,5,5,5"
                 Grid.Row="0"
                 Grid.Column="1">
-                
-                <ListView x:Name="ViewMatrix"
-                          FontSize="15">
+
+                <ListView x:Name="viewMatrix"
+                          FontSize="15"
+                          Margin="3">
 
                     <ListView.View>
                         <GridView>
@@ -280,7 +283,7 @@
                                 <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
                                 <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
                                 <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
-                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="46"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="45"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
@@ -288,13 +291,14 @@
             </GroupBox>
 
             <GroupBox
-                Header="ViewModel Matrix"
-                Margin="5 5 5 5"
+                Header="ModelView Matrix"
+                Margin="5,5,5,5"
                 Grid.Row="0"
                 Grid.Column="2">
 
-                <ListView x:Name="ViewModelMatrix"
-                          FontSize="15">
+                <ListView x:Name="modelViewMatrix"
+                          FontSize="15"
+                          Margin="3">
 
                     <ListView.View>
                         <GridView>
@@ -302,7 +306,7 @@
                                 <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
                                 <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
                                 <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
-                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="46"/>
+                                <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="45"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
