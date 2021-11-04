@@ -25,7 +25,7 @@ namespace TransformationApplication.Scenes
         public LeftScene(Transformation cameraTransformation)
         {
             _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Cube.Vertices));
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.Cube));
 
             _camera = new(cameraTransformation, AspectRatio);
         }

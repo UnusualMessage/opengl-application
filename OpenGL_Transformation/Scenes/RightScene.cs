@@ -23,7 +23,7 @@ namespace TransformationApplication.Scenes
         public RightScene()
         {
             _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Cube.Vertices));
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.Cube));
 
             GL.Enable(EnableCap.DepthTest);
         }

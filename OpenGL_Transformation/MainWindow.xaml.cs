@@ -55,15 +55,19 @@ namespace TransformationApplication
             BindMatrices();
         }
 
-        private void LeftGlControlOnRender(TimeSpan delta)
+        private void BindMatrices()
         {
-            _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
-            Matrix4 view = _leftScene.Render(CameraTransformation.Clone(), ModelTransformation.Clone());
-            Matrix4 model = TransformationMatrix.GetTransformationMatrix(ModelTransformation);
+            int rowsCount = 4;
+            for (int i = 0; i < rowsCount; ++i)
+            {
+                _modelMatrixGrid.Add(new MatrixRow());
+                _viewMatrixGrid.Add(new MatrixRow());
+                _modelViewMatrixGrid.Add(new MatrixRow());
+            }
 
-            UpdateGrid(_modelMatrixGrid, new(model));
-            UpdateGrid(_viewMatrixGrid, new(view));
-            UpdateGrid(_modelViewMatrixGrid, new(model * view));
+            modelMatrix.ItemsSource = _modelMatrixGrid;
+            viewMatrix.ItemsSource = _viewMatrixGrid;
+            modelViewMatrix.ItemsSource = _modelViewMatrixGrid;
         }
 
         private static void UpdateGrid(ObservableCollection<MatrixRow> grid, TransformationMatrix matrix)
@@ -78,19 +82,15 @@ namespace TransformationApplication
             }
         }
 
-        private void BindMatrices()
+        private void LeftGlControlOnRender(TimeSpan delta)
         {
-            int rowsCount = 4;
-            for (int i = 0; i < rowsCount; ++i)
-            {
-                _modelMatrixGrid.Add(new MatrixRow());
-                _viewMatrixGrid.Add(new MatrixRow());
-                _modelViewMatrixGrid.Add(new MatrixRow());
-            }
+            _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
+            Matrix4 view = _leftScene.Render(CameraTransformation.Clone(), ModelTransformation.Clone());
+            Matrix4 model = TransformationMatrix.GetTransformationMatrix(ModelTransformation);
 
-            modelMatrix.ItemsSource = _modelMatrixGrid;
-            viewMatrix.ItemsSource = _viewMatrixGrid;
-            modelViewMatrix.ItemsSource = _modelViewMatrixGrid;
+            UpdateGrid(_modelMatrixGrid, new(model));
+            UpdateGrid(_viewMatrixGrid, new(view));
+            UpdateGrid(_modelViewMatrixGrid, new(model * view));
         }
 
         private void RightGlControlOnRender(TimeSpan delta)

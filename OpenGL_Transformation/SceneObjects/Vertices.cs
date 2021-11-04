@@ -1,8 +1,8 @@
 ﻿namespace TransformationApplication.SceneObjects
 {
-    public static class Cube
+    public static class Vertices
     {
-        public static readonly float[] Vertices = {
+        public static readonly float[] Cube = {
             -0.5f, -0.5f, -0.5f,
              0.5f, -0.5f, -0.5f,
              0.5f,  0.5f, -0.5f,
