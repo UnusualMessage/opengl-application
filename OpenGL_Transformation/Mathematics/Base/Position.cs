@@ -5,7 +5,7 @@ using OpenTK.Mathematics;
 
 namespace TransformationApplication.Mathematics.Base
 {
-    public class Translation : INotifyPropertyChanged
+    public class Position : INotifyPropertyChanged
     {
         private const float MinBorder = -10.0f;
         private const float MaxBorder = 10.0f;
@@ -43,25 +43,25 @@ namespace TransformationApplication.Mathematics.Base
             }
         }
 
-        public Translation() { }
+        public Position() { }
 
-        public Translation(float x, float y, float z)
+        public Position(float x, float y, float z)
         {
             _x = x;
             _y = y;
             _z = z;
         }
 
-        private Translation(Translation translation)
+        private Position(Position translation)
         {
             _x = translation.X;
             _y = translation.Y;
             _z = translation.Z;
         }
 
-        public Translation Clone()
+        public Position Clone()
         {
-            return new Translation(this);
+            return new Position(this);
         }
 
         public void Reset()

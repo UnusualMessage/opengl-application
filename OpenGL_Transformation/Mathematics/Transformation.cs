@@ -5,24 +5,24 @@ namespace TransformationApplication.Mathematics
     public class Transformation
     {
         public Rotation Rotation { get; }
-        public Translation Translation { get; }
+        public Position Position { get; }
 
         public Transformation()
         {
             Rotation = new Rotation();
-            Translation = new Translation();
+            Position = new Position();
         }
 
-        public Transformation(Rotation rotation, Translation translation)
+        public Transformation(Rotation rotation, Position translation)
         {
             Rotation = rotation;
-            Translation = translation;
+            Position = translation;
         }
 
         private Transformation(Transformation transformation)
         {
             Rotation = transformation.Rotation.Clone();
-            Translation = transformation.Translation.Clone();
+            Position = transformation.Position.Clone();
         }
 
         public Transformation Clone()
@@ -37,7 +37,7 @@ namespace TransformationApplication.Mathematics
 
         public void ResetTranslation()
         {
-            Translation.Reset();
+            Position.Reset();
         }
 
         public void Reset()

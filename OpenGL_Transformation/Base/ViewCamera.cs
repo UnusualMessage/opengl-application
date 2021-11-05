@@ -29,9 +29,9 @@ namespace TransformationApplication.Base
 
         public Matrix4 GetViewMatrix()
         {
-            Vector3 position = new(Transformation.Translation.X,
-                Transformation.Translation.Y,
-                Transformation.Translation.Z);
+            Vector3 position = new(Transformation.Position.X,
+                Transformation.Position.Y,
+                Transformation.Position.Z);
 
             return Matrix4.LookAt(position, position + Front, Up);
         }

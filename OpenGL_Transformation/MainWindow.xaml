@@ -98,18 +98,18 @@
                                 Grid.Row="0" Margin="6,10,10,5" Grid.Column="1">
 
                         <Slider x:Name="cameraXPosSlider"
-                                Value="{Binding Path=Translation.X}"
+                                Value="{Binding Path=Position.X}"
                                 Style="{StaticResource PositionSlider}"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="cameraYPosSlider"
-                                Value="{Binding Path=Translation.Y}"
+                                Value="{Binding Path=Position.Y}"
                                 Style="{StaticResource PositionSlider}"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="cameraZPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                Value="{Binding Path=Translation.Z}"
+                                Value="{Binding Path=Position.Z}"
                                 Margin="0 7 0 24"/>
 
                         <Slider x:Name="cameraXRotSlider"
@@ -182,17 +182,17 @@
                                 Grid.Row="0" Margin="6,10,10,5" Grid.Column="1">
                         <Slider x:Name="modelXPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                Value="{Binding Path=Translation.X}"
+                                Value="{Binding Path=Position.X}"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="modelYPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                Value="{Binding Path=Translation.Y}"
+                                Value="{Binding Path=Position.Y}"
                                 Margin="0 7 0 7"/>
 
                         <Slider x:Name="modelZPosSlider"
                                 Style="{StaticResource PositionSlider}"
-                                Value="{Binding Path=Translation.Z}"
+                                Value="{Binding Path=Position.Z}"
                                 Margin="0 7 0 24"/>
 
                         <Slider x:Name="modelXRotSlider"
