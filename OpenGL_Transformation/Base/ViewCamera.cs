@@ -7,7 +7,7 @@ namespace TransformationApplication.Base
 {
     public class ViewCamera : SceneObject
     {
-        private float _fov = MathHelper.PiOver2;
+        private float _fov = MathHelper.PiOver4;
 
         public ViewCamera(Transformation transformation, float aspectRatio)
         {
@@ -22,7 +22,7 @@ namespace TransformationApplication.Base
             get => MathHelper.RadiansToDegrees(_fov);
             set
             {
-                float angle = MathHelper.Clamp(value, 1f, 45f);
+                float angle = MathHelper.Clamp(value, 1.0f, 90.0f);
                 _fov = MathHelper.DegreesToRadians(angle);
             }
         }
@@ -39,7 +39,7 @@ namespace TransformationApplication.Base
         public Matrix4 GetProjectionMatrix()
         {
             const float near = 0.1f;
-            const float far = 10.0f;
+            const float far = 10.1f;
             return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, near, far);
         }
     }

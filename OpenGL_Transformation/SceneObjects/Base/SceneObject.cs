@@ -11,7 +11,25 @@ namespace TransformationApplication.SceneObjects.Base
         private Vector3 _front = -Vector3.UnitZ;
         private Vector3 _up = Vector3.UnitY;
 
-        public Transformation Transformation { get; set; }
+        protected Transformation Transformation { get; set; }
+
+        public float X
+        {
+            get => Transformation.Position.X;
+            set => Transformation.Position.X = value;
+        }
+
+        public float Y
+        {
+            get => Transformation.Position.Y;
+            set => Transformation.Position.Y = value;
+        }
+
+        public float Z
+        {
+            get => Transformation.Position.Z;
+            set => Transformation.Position.Z = value;
+        }
 
         public float Pitch
         {
@@ -43,13 +61,13 @@ namespace TransformationApplication.SceneObjects.Base
             }
         }
 
-        public Vector3 Front
+        protected Vector3 Front
         {
             get => _front;
             set => _front = value;
         }
 
-        public Vector3 Up
+        protected Vector3 Up
         {
             get => _up;
             set => _up = value;
@@ -58,6 +76,12 @@ namespace TransformationApplication.SceneObjects.Base
         public void UpdateTransformation(Transformation transformation)
         {
             Transformation = transformation.Clone();
+            UpdateVectors();
+        }
+
+        public void ResetTransformation()
+        {
+            Transformation.Reset();
             UpdateVectors();
         }
 
