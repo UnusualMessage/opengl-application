@@ -7,7 +7,7 @@ namespace TransformationApplication.Mathematics.Base
 {
     public class Rotation : INotifyPropertyChanged
     {
-        private const float MinBorder = -180.0f;
+        private const float MinBorder = -270.0f;
         private const float MaxBorder = 180.0f;
 
         private float _pitch;

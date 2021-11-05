@@ -16,40 +16,42 @@ namespace TransformationApplication.Scenes
         private float _width;
         private float _height;
 
-        private readonly ViewCamera _camera;
+        private readonly ViewCamera _userCamera;
 
-        private readonly List<VisibleObject> _visibleObjects = new();
+        private readonly List<VisibleObject> _visibleObjects;
 
         private float AspectRatio => _width / _height;
 
-        public LeftScene(Transformation cameraTransformation)
+        public LeftScene(Transformation cameraTransformation, List<VisibleObject> objects)
         {
-            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.Cube));
-
-            _camera = new(cameraTransformation, AspectRatio);
+            _visibleObjects = objects;
+            _userCamera = new(cameraTransformation, AspectRatio);
+            GL.Enable(EnableCap.DepthTest);
         }
 
-        public Matrix4 Render(Transformation cameraTransformation, Transformation modelTransformation)
+        public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)
         {
+            Transformation cameraTransformationCopy = cameraTransformation.Clone();
+            Transformation modelTransformationCopy = modelTransformation.Clone();
+
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            _camera.AspectRatio = AspectRatio;
-            cameraTransformation.Rotation.Yaw += -90.0f;
-            _camera.UpdateTransformation(cameraTransformation);
+            _userCamera.AspectRatio = AspectRatio;
+            cameraTransformationCopy.Rotation.Yaw += -90.0f;
+            cameraTransformationCopy.Position.Y -= 0.5f;
 
-            Matrix4 view = _camera.GetViewMatrix();
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
+            _userCamera.UpdateTransformation(cameraTransformationCopy);
+            view = _userCamera.GetViewMatrix();
+            Matrix4 projection = _userCamera.GetProjectionMatrix();
 
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
-                visibleObject.Bind();
-                visibleObject.UpdateTransformation(modelTransformation);
+                visibleObject.UpdateTransformation(modelTransformationCopy);
                 visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
             }
 
-            return view;
+            view.M42 -= 0.5f;
         }
 
         public void UpdateAspectRatio(float width, float height)

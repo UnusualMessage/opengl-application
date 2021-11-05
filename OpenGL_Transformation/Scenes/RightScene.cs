@@ -16,37 +16,40 @@ namespace TransformationApplication.Scenes
         private float _width;
         private float _height;
 
-        private readonly List<VisibleObject> _visibleObjects = new();
+        private readonly ViewCamera _userCamera;
+
+        private readonly List<VisibleObject> _visibleObjects;
 
         private float AspectRatio => _width / _height;
 
-        public RightScene()
+        public RightScene(Transformation cameraTransformation, List<VisibleObject> objects)
         {
-            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.Cube));
-
-            GL.Enable(EnableCap.DepthTest);
+            _visibleObjects = objects;
+            _userCamera = new(cameraTransformation, AspectRatio);
         }
         
-        public Matrix4 Render(Transformation cameraTransformation, Transformation modelTransformation)
+        public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)
         {
+            Transformation cameraTransformationCopy = cameraTransformation.Clone();
+            Transformation modelTransformationCopy = modelTransformation.Clone();
+
             GL.ClearColor(Color4.Gray);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 view = Matrix4.Identity * Matrix4.CreateTranslation(new(0.0f, -5.0f, -10.0f));
+            view = Matrix4.Identity;
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
 
-            foreach (VisibleObject visibleObject in _visibleObjects)
-            {
-                visibleObject.Bind();
-                visibleObject.UpdateTransformation(modelTransformation);
-                visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
+            // model
+            _visibleObjects[0].UpdateTransformation(modelTransformationCopy);
+            _visibleObjects[0].Draw(view, projection, new(1.0f, 1.0f, 1.0f));
 
-                visibleObject.UpdateTransformation(cameraTransformation);
-                visibleObject.Draw(view, projection, new(1.0f, 1.0f, 0.0f));
-            }
+            _visibleObjects[2].UpdateTransformation(modelTransformationCopy);
+            _visibleObjects[2].Draw(view, projection, new(1.0f, 1.0f, 1.0f));
 
-            return view;
+            // camera
+            cameraTransformationCopy.Position.Y -= 0.5f;
+            _visibleObjects[1].UpdateTransformation(cameraTransformationCopy);
+            _visibleObjects[1].Draw(view, projection, new(1.0f, 1.0f, 0.0f));
         }
 
         public void UpdateAspectRatio(float width, float height)

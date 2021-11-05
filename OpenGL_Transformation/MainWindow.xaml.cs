@@ -22,6 +22,8 @@ namespace TransformationApplication
         public Transformation ModelTransformation { get; }
         public Transformation CameraTransformation { get; }
 
+        private readonly List<VisibleObject> _visibleObjects = new();
+
         private readonly IRenderable _leftScene;
         private readonly IRenderable _rightScene;
 
@@ -35,8 +37,8 @@ namespace TransformationApplication
 
         public MainWindow()
         {
-            ModelTransformation = new(new Rotation(), new Translation());
-            CameraTransformation = new(new Rotation(), new Translation(0, 0, 10.0f));
+            ModelTransformation = new(new Rotation(), new Position());
+            CameraTransformation = new(new Rotation(), new Position(0, 0, 10.0f));
 
             InitializeComponent();
 
@@ -49,8 +51,17 @@ namespace TransformationApplication
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _leftScene = new LeftScene(CameraTransformation);
-            _rightScene = new RightScene();
+            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.GetParallelepiped(0.5f, 0.5f, 0.5f)));
+
+            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.GetParallelepiped(0.5f, 0.3f, 0.2f)));
+
+            _visibleObjects.Add(new Field(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
+                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.FieldLine));
+
+            _leftScene = new LeftScene(CameraTransformation, _visibleObjects);
+            _rightScene = new RightScene(CameraTransformation, _visibleObjects);
 
             _modelMatrixGrid = new();
             _viewMatrixGrid = new();
@@ -89,7 +100,7 @@ namespace TransformationApplication
         private void LeftGlControlOnRender(TimeSpan delta)
         {
             _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
-            Matrix4 view = _leftScene.Render(CameraTransformation.Clone(), ModelTransformation.Clone());
+            _leftScene.Render(CameraTransformation, ModelTransformation, out Matrix4 view);
             Matrix4 model = TransformationMatrix.GetTransformationMatrix(ModelTransformation);
 
             UpdateGrid(_modelMatrixGrid, new(model));
@@ -100,7 +111,7 @@ namespace TransformationApplication
         private void RightGlControlOnRender(TimeSpan delta)
         {
             _rightScene.UpdateAspectRatio((float)RightGlControl.ActualWidth, (float)RightGlControl.ActualHeight);
-            _ = _rightScene.Render(CameraTransformation, ModelTransformation);
+            _rightScene.Render(CameraTransformation, ModelTransformation, out _);
         }
 
         private void RightGlControlMouseMove(object sender, MouseEventArgs e)

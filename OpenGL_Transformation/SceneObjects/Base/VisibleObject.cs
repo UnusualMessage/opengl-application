@@ -44,13 +44,13 @@ namespace TransformationApplication.SceneObjects.Base
             GL.BindVertexArray(_vertexArrayObject);
         }
 
-        public void Draw(Matrix4 view, Matrix4 projection, Vector3 color)
+        public virtual void Draw(Matrix4 view, Matrix4 projection, Vector3 color)
         {
             Matrix4 model = GetModelMatrix();
             Draw(model, view, projection, color);
         }
 
-        public void Draw(Matrix4 model, Matrix4 view, Matrix4 projection, Vector3 color)
+        public virtual void Draw(Matrix4 model, Matrix4 view, Matrix4 projection, Vector3 color)
         {
             Shader.Use();
 
