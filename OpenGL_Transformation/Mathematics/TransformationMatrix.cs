@@ -24,9 +24,9 @@ namespace TransformationApplication.Mathematics
             float yaw = MathHelper.DegreesToRadians(transformation.Rotation.Yaw);
             float roll = MathHelper.DegreesToRadians(transformation.Rotation.Roll);
 
-            Vector3 translation = new(transformation.Translation.X,
-                transformation.Translation.Y,
-                transformation.Translation.Z);
+            Vector3 translation = new(transformation.Position.X,
+                transformation.Position.Y,
+                transformation.Position.Z);
 
             Matrix4 model = Matrix4.Identity * Matrix4.CreateRotationX(pitch);
             model *= Matrix4.CreateRotationY(yaw);

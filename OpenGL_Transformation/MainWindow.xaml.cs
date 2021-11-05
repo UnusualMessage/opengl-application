@@ -2,11 +2,15 @@
 using TransformationApplication.Scenes;
 using TransformationApplication.Mathematics;
 using TransformationApplication.Mathematics.Base;
+using TransformationApplication.SceneObjects.Base;
+using TransformationApplication.SceneObjects;
+using TransformationApplication.Base;
 
 using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 using OpenTK.Wpf;
 using OpenTK.Mathematics;
@@ -150,7 +154,7 @@ namespace TransformationApplication
         private void CameraResetClick(object sender, RoutedEventArgs e)
         {
             CameraTransformation.Reset();
-            CameraTransformation.Translation.Z = 10.0f;
+            CameraTransformation.Position.Z = 10.0f;
         }
     }
 }
