@@ -19,6 +19,9 @@ namespace TransformationApplication
 {
     public partial class MainWindow : Window
     {
+        private const string VertexShaderPath = "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert";
+        private const string FragmentShaderPath = "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag";
+
         public Transformation ModelTransformation { get; }
         public Transformation CameraTransformation { get; }
 
@@ -51,14 +54,9 @@ namespace TransformationApplication
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.GetParallelepiped(0.5f, 0.5f, 0.5f)));
-
-            _visibleObjects.Add(new VisibleObject(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.GetParallelepiped(0.5f, 0.3f, 0.2f)));
-
-            _visibleObjects.Add(new Field(new Shader("C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert",
-                "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag"), Vertices.FieldLine));
+            _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(0.5f, 0.5f, 0.5f)));
+            _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(0.5f, 0.3f, 0.2f)));
+            _visibleObjects.Add(new Field(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.FieldLine));
 
             _leftScene = new LeftScene(CameraTransformation, _visibleObjects);
             _rightScene = new RightScene(CameraTransformation, _visibleObjects);

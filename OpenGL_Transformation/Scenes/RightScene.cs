@@ -33,7 +33,7 @@ namespace TransformationApplication.Scenes
             Transformation cameraTransformationCopy = cameraTransformation.Clone();
             Transformation modelTransformationCopy = modelTransformation.Clone();
 
-            GL.ClearColor(Color4.Gray);
+            GL.ClearColor(new Color4(0.6f, 0.6f, 0.6f, 1.0f));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             view = Matrix4.Identity;

@@ -5,7 +5,7 @@ using OpenTK.Mathematics;
 
 namespace TransformationApplication.Base
 {
-    public class ViewCamera : SceneObject
+    public class ViewCamera : SceneComponent
     {
         private float _fov = MathHelper.PiOver4;
 

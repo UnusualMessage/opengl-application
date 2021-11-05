@@ -6,7 +6,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace TransformationApplication.SceneObjects.Base
 {
-    public class VisibleObject : SceneObject
+    public class VisibleObject : SceneComponent
     {
         public PrimitiveType DrawingMode { get; set; } = PrimitiveType.Triangles;
 

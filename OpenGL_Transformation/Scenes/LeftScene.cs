@@ -1,6 +1,5 @@
 ﻿using TransformationApplication.Scenes.Base;
 using TransformationApplication.Base;
-using TransformationApplication.SceneObjects;
 using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.Mathematics;
 
