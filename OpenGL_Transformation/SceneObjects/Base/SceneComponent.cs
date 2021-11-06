@@ -8,10 +8,11 @@ namespace TransformationApplication.SceneObjects.Base
 {
     public class SceneComponent
     {
-        private Vector3 _front = -Vector3.UnitZ;
+        private Vector3 _front = Vector3.UnitZ;
         private Vector3 _up = Vector3.UnitY;
+        private Vector3 _right = Vector3.UnitX;
 
-        protected Transformation Transformation { get; set; }
+        protected Transformation Transformation { get; set; } = new();
 
         public float X
         {
@@ -71,6 +72,12 @@ namespace TransformationApplication.SceneObjects.Base
         {
             get => _up;
             set => _up = value;
+        }
+
+        protected Vector3 Right
+        {
+            get => _right;
+            set => _right = value;
         }
 
         public void UpdateTransformation(Transformation transformation)

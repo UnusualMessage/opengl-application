@@ -26,6 +26,7 @@ namespace TransformationApplication.Scenes
             _visibleObjects = objects;
             _userCamera = new(cameraTransformation, AspectRatio);
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Blend);
         }
 
         public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)
@@ -33,12 +34,11 @@ namespace TransformationApplication.Scenes
             Transformation cameraTransformationCopy = cameraTransformation.Clone();
             Transformation modelTransformationCopy = modelTransformation.Clone();
 
-            GL.ClearColor(Color4.Black);
+            GL.ClearColor(new Color4(0.1f, 0.1f, 0.1f, 1.0f));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             _userCamera.AspectRatio = AspectRatio;
             cameraTransformationCopy.Rotation.Yaw += -90.0f;
-            cameraTransformationCopy.Position.Y -= 0.5f;
 
             _userCamera.UpdateTransformation(cameraTransformationCopy);
             view = _userCamera.GetViewMatrix();
@@ -47,10 +47,8 @@ namespace TransformationApplication.Scenes
             foreach (VisibleObject visibleObject in _visibleObjects)
             {
                 visibleObject.UpdateTransformation(modelTransformationCopy);
-                visibleObject.Draw(view, projection, new(1.0f, 1.0f, 1.0f));
+                visibleObject.Draw(view, projection);
             }
-
-            view.M42 -= 0.5f;
         }
 
         public void UpdateAspectRatio(float width, float height)

@@ -8,7 +8,8 @@ namespace TransformationApplication.SceneObjects.Base
 {
     public class VisibleObject : SceneComponent
     {
-        public PrimitiveType DrawingMode { get; set; } = PrimitiveType.Triangles;
+        public Vector4 Color { private get; set; } = new(1.0f, 1.0f, 1.0f, 1.0f);
+        public PrimitiveType DrawingMode { private get; set; } = PrimitiveType.Triangles;
 
         private readonly int _vertexBufferObject;
         private readonly int _vertexArrayObject;
@@ -44,13 +45,13 @@ namespace TransformationApplication.SceneObjects.Base
             GL.BindVertexArray(_vertexArrayObject);
         }
 
-        public virtual void Draw(Matrix4 view, Matrix4 projection, Vector3 color)
+        public virtual void Draw(Matrix4 view, Matrix4 projection)
         {
             Matrix4 model = GetModelMatrix();
-            Draw(model, view, projection, color);
+            Draw(model, view, projection);
         }
 
-        public virtual void Draw(Matrix4 model, Matrix4 view, Matrix4 projection, Vector3 color)
+        public virtual void Draw(Matrix4 model, Matrix4 view, Matrix4 projection)
         {
             Shader.Use();
 
@@ -58,7 +59,7 @@ namespace TransformationApplication.SceneObjects.Base
             Shader.SetMatrix4("view", view);
             Shader.SetMatrix4("projection", projection);
 
-            Shader.SetVector3("inputColor", color);
+            Shader.SetVector4("inputColor", Color);
 
             Bind();
             GL.DrawArrays(DrawingMode, 0, Vertices.Length / 3);

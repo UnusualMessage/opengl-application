@@ -21,6 +21,8 @@ namespace TransformationApplication
     {
         private const string VertexShaderPath = "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert";
         private const string FragmentShaderPath = "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag";
+        private const float DefaultModelY = 1.0f;
+        private const float DefaultCameraZ = 10.0f;
 
         public Transformation ModelTransformation { get; }
         public Transformation CameraTransformation { get; }
@@ -40,8 +42,8 @@ namespace TransformationApplication
 
         public MainWindow()
         {
-            ModelTransformation = new(new Rotation(), new Position());
-            CameraTransformation = new(new Rotation(), new Position(0, 0, 10.0f));
+            ModelTransformation = new(new Rotation(), new Position(0, DefaultModelY, 0));
+            CameraTransformation = new(new Rotation(), new Position(0, 0, DefaultCameraZ));
 
             InitializeComponent();
 
@@ -54,7 +56,7 @@ namespace TransformationApplication
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(0.5f, 0.5f, 0.5f)));
+            _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f)));
             _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(0.5f, 0.3f, 0.2f)));
             _visibleObjects.Add(new Field(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.FieldLine));
 
@@ -158,12 +160,13 @@ namespace TransformationApplication
         private void ModelResetClick(object sender, RoutedEventArgs e)
         {
             ModelTransformation.Reset();
+            ModelTransformation.Position.Y = DefaultModelY;
         }
 
         private void CameraResetClick(object sender, RoutedEventArgs e)
         {
             CameraTransformation.Reset();
-            CameraTransformation.Position.Z = 10.0f;
+            CameraTransformation.Position.Z = DefaultCameraZ;
         }
     }
 }

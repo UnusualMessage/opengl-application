@@ -13,6 +13,7 @@ namespace TransformationApplication.Base
         {
             Transformation = transformation.Clone();
             AspectRatio = aspectRatio;
+            Front = -Vector3.UnitZ;
         }
 
         public float AspectRatio { private get; set; }
@@ -38,7 +39,7 @@ namespace TransformationApplication.Base
 
         public Matrix4 GetProjectionMatrix()
         {
-            const float near = 0.1f;
+            const float near = 1.0f;
             const float far = 10.1f;
             return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, near, far);
         }
