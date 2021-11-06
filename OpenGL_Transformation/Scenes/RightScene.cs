@@ -21,10 +21,10 @@ namespace TransformationApplication.Scenes
 
         private float AspectRatio => _width / _height;
 
-        public RightScene(Transformation cameraTransformation, List<VisibleObject> objects)
+        public RightScene(ViewCamera userCamera, List<VisibleObject> objects)
         {
             _visibleObjects = objects;
-            _userCamera = new(cameraTransformation, AspectRatio);
+            _userCamera = userCamera;
         }
         
         public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)
@@ -35,9 +35,14 @@ namespace TransformationApplication.Scenes
             GL.ClearColor(Color4.Black);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            view = Matrix4.Identity * Matrix4.CreateTranslation(0.0f, -5.0f, -10.0f);
-            view *= Matrix4.CreateRotationX(MathHelper.PiOver4);
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, AspectRatio, 0.1f, 100f);
+            _userCamera.AspectRatio = AspectRatio;
+            _userCamera.Fov = 70.0f;
+
+            float yaw = MathHelper.DegreesToRadians(_userCamera.Yaw);
+            float pitch = MathHelper.DegreesToRadians(_userCamera.Pitch);
+
+            view = Matrix4.Identity * Matrix4.CreateRotationY(yaw) * Matrix4.CreateRotationX(pitch) * Matrix4.CreateTranslation(0.0f, 0.0f, -20.0f);
+            Matrix4 projection = _userCamera.GetProjectionMatrix(1.0f, 100.0f);
 
             // model
             _visibleObjects[0].UpdateTransformation(modelTransformationCopy);

@@ -36,9 +36,10 @@ namespace TransformationApplication
         private readonly ObservableCollection<MatrixRow> _viewMatrixGrid;
         private readonly ObservableCollection<MatrixRow> _modelViewMatrixGrid;
 
+        private readonly ViewCamera _userCamera;
         private Vector2 _lastMousePosition;
-        private bool _firstMove;
-        private bool _mouseDown;
+        private bool _firstMove = true;
+        private bool _mouseDown = false;
 
         public MainWindow()
         {
@@ -60,8 +61,10 @@ namespace TransformationApplication
             _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(0.5f, 0.3f, 0.2f)));
             _visibleObjects.Add(new Field(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.FieldLine));
 
-            _leftScene = new LeftScene(CameraTransformation, _visibleObjects);
-            _rightScene = new RightScene(CameraTransformation, _visibleObjects);
+            _userCamera = new();
+
+            _leftScene = new LeftScene(_visibleObjects);
+            _rightScene = new RightScene(_userCamera, _visibleObjects);
 
             _modelMatrixGrid = new();
             _viewMatrixGrid = new();
@@ -136,6 +139,9 @@ namespace TransformationApplication
                 float yDelta = mouseY - _lastMousePosition.Y;
 
                 _lastMousePosition = new Vector2(mouseX, mouseY);
+
+                _userCamera.Yaw += xDelta * 0.2f;
+                _userCamera.Pitch += yDelta * 0.2f;
             }
         }
 
