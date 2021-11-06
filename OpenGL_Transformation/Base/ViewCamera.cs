@@ -9,14 +9,12 @@ namespace TransformationApplication.Base
     {
         private float _fov = MathHelper.PiOver4;
 
-        public ViewCamera(Transformation transformation, float aspectRatio)
+        public ViewCamera()
         {
-            Transformation = transformation.Clone();
-            AspectRatio = aspectRatio;
             Front = -Vector3.UnitZ;
         }
 
-        public float AspectRatio { private get; set; }
+        public float AspectRatio { private get; set; } = 1.0f;
 
         public float Fov
         {
@@ -37,10 +35,8 @@ namespace TransformationApplication.Base
             return Matrix4.LookAt(position, position + Front, Up);
         }
 
-        public Matrix4 GetProjectionMatrix()
+        public Matrix4 GetProjectionMatrix(float near, float far)
         {
-            const float near = 1.0f;
-            const float far = 10.1f;
             return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, near, far);
         }
     }

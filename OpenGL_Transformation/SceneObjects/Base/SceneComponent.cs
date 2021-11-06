@@ -34,7 +34,7 @@ namespace TransformationApplication.SceneObjects.Base
 
         public float Pitch
         {
-            get => MathHelper.DegreesToRadians(Transformation.Rotation.Pitch);
+            get => Transformation.Rotation.Pitch;
             set
             {
                 Transformation.Rotation.Pitch = value;
@@ -44,7 +44,7 @@ namespace TransformationApplication.SceneObjects.Base
 
         public float Yaw
         {
-            get => MathHelper.DegreesToRadians(Transformation.Rotation.Yaw);
+            get => Transformation.Rotation.Yaw;
             set
             {
                 Transformation.Rotation.Yaw = value;
@@ -54,7 +54,7 @@ namespace TransformationApplication.SceneObjects.Base
 
         public float Roll
         {
-            get => MathHelper.DegreesToRadians(Transformation.Rotation.Roll);
+            get => Transformation.Rotation.Roll;
             set
             {
                 Transformation.Rotation.Roll = value;
@@ -100,17 +100,22 @@ namespace TransformationApplication.SceneObjects.Base
 
         private void ApplyRoll()
         {
-            _up.X = MathF.Sin(Roll);
-            _up.Y = MathF.Cos(Roll);
-            _up.Z = MathF.Sin(Roll);
+            float roll = MathHelper.DegreesToRadians(Roll);
+
+            _up.X = MathF.Sin(roll);
+            _up.Y = MathF.Cos(roll);
+            _up.Z = MathF.Sin(roll);
             _up = Vector3.Normalize(_up);
         }
 
         private void ApplyPitch()
         {
-            _front.X = MathF.Cos(Pitch) * MathF.Cos(Yaw);
-            _front.Y = MathF.Sin(Pitch);
-            _front.Z = MathF.Cos(Pitch) * MathF.Sin(Yaw);
+            float pitch = MathHelper.DegreesToRadians(Pitch);
+            float yaw = MathHelper.DegreesToRadians(Yaw);
+
+            _front.X = MathF.Cos(pitch) * MathF.Cos(yaw);
+            _front.Y = MathF.Sin(pitch);
+            _front.Z = MathF.Cos(pitch) * MathF.Sin(yaw);
             _front = Vector3.Normalize(_front);
         }
     }

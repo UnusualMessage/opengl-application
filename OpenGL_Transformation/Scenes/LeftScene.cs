@@ -15,16 +15,16 @@ namespace TransformationApplication.Scenes
         private float _width;
         private float _height;
 
-        private readonly ViewCamera _userCamera;
+        private readonly ViewCamera _userCamera = new();
 
         private readonly List<VisibleObject> _visibleObjects;
 
         private float AspectRatio => _width / _height;
 
-        public LeftScene(Transformation cameraTransformation, List<VisibleObject> objects)
+        public LeftScene(List<VisibleObject> objects)
         {
             _visibleObjects = objects;
-            _userCamera = new(cameraTransformation, AspectRatio);
+
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Blend);
         }
@@ -42,7 +42,7 @@ namespace TransformationApplication.Scenes
 
             _userCamera.UpdateTransformation(cameraTransformationCopy);
             view = _userCamera.GetViewMatrix();
-            Matrix4 projection = _userCamera.GetProjectionMatrix();
+            Matrix4 projection = _userCamera.GetProjectionMatrix(1.0f, 10.1f);
 
             foreach (VisibleObject visibleObject in _visibleObjects)
             {

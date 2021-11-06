@@ -1,15 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using OpenTK.Mathematics;
-
 namespace TransformationApplication.Mathematics.Base
 {
     public class Position : INotifyPropertyChanged
     {
-        private const float MinBorder = -10.0f;
-        private const float MaxBorder = 10.0f;
-
         private float _x;
         private float _y;
         private float _z;
@@ -21,7 +16,7 @@ namespace TransformationApplication.Mathematics.Base
             get => _x;
             set
             {
-                _x = MathHelper.Clamp(value, MinBorder, MaxBorder); NotifyPropertyChanged();
+                _x = value; NotifyPropertyChanged();
             }
         }
 
@@ -30,7 +25,7 @@ namespace TransformationApplication.Mathematics.Base
             get => _y;
             set
             {
-                _y = MathHelper.Clamp(value, MinBorder, MaxBorder); NotifyPropertyChanged();
+                _y = value; NotifyPropertyChanged();
             }
         }
 
@@ -39,7 +34,7 @@ namespace TransformationApplication.Mathematics.Base
             get => _z;
             set
             {
-                _z = MathHelper.Clamp(value, MinBorder, MaxBorder); NotifyPropertyChanged();
+                _z = value; NotifyPropertyChanged();
             }
         }
 

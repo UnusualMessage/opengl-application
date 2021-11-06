@@ -21,8 +21,7 @@ namespace TransformationApplication.Mathematics.Base
             get => _pitch;
             set
             {
-                float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
-                _pitch = angle; NotifyPropertyChanged();
+                _pitch = value; NotifyPropertyChanged();
             }
         }
 
@@ -31,8 +30,7 @@ namespace TransformationApplication.Mathematics.Base
             get => _yaw;
             set
             {
-                float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
-                _yaw = angle; NotifyPropertyChanged();
+                _yaw = value; NotifyPropertyChanged();
             }
         }
 
@@ -41,8 +39,7 @@ namespace TransformationApplication.Mathematics.Base
             get => _roll;
             set
             {
-                float angle = MathHelper.Clamp(value, MinBorder, MaxBorder);
-                _roll = angle; NotifyPropertyChanged();
+                _roll = value; NotifyPropertyChanged();
             }
         }
 
