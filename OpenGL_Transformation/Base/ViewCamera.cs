@@ -9,6 +9,12 @@ namespace TransformationApplication.Base
     {
         private float _fov = MathHelper.PiOver4;
 
+        public ViewCamera(Transformation transformation)
+        {
+            Transformation = transformation.Clone();
+            Front = -Vector3.UnitZ;
+        }
+
         public ViewCamera()
         {
             Front = -Vector3.UnitZ;

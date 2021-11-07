@@ -15,7 +15,7 @@ namespace TransformationApplication.SceneObjects.Base
         private readonly int _vertexArrayObject;
 
         public Shader Shader { get; }
-        public float[] Vertices { get; }
+        public float[] Vertices { get; set; }
 
         public VisibleObject(Shader shader, float[] vertices)
         {

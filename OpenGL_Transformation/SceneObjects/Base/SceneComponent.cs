@@ -12,7 +12,17 @@ namespace TransformationApplication.SceneObjects.Base
         private Vector3 _up = Vector3.UnitY;
         private Vector3 _right = Vector3.UnitX;
 
-        protected Transformation Transformation { get; set; } = new();
+        private Transformation _transformation = new();
+
+        protected Transformation Transformation
+        {
+            get => _transformation;
+            set
+            {
+                _transformation = value;
+                UpdateVectors();
+            }
+        }
 
         public float X
         {
