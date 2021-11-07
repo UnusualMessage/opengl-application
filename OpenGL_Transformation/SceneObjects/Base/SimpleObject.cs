@@ -6,7 +6,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace TransformationApplication.SceneObjects.Base
 {
-    public class VisibleObject : SceneComponent
+    public class SimpleObject : SceneComponent, IVisible
     {
         public Vector4 Color { private get; set; } = new(1.0f, 1.0f, 1.0f, 1.0f);
         public PrimitiveType DrawingMode { private get; set; } = PrimitiveType.Triangles;
@@ -15,9 +15,9 @@ namespace TransformationApplication.SceneObjects.Base
         private readonly int _vertexArrayObject;
 
         public Shader Shader { get; }
-        public float[] Vertices { get; set; }
+        public float[] Vertices { get; }
 
-        public VisibleObject(Shader shader, float[] vertices)
+        public SimpleObject(Shader shader, float[] vertices)
         {
             Transformation = new();
             Shader = shader;
@@ -39,19 +39,27 @@ namespace TransformationApplication.SceneObjects.Base
             GL.EnableVertexAttribArray(0);
         }
 
-        public void Bind()
+        private void Bind()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
             GL.BindVertexArray(_vertexArrayObject);
         }
 
-        public virtual void Draw(Matrix4 view, Matrix4 projection)
+        public void Draw(Matrix4 view, Matrix4 projection)
         {
-            Matrix4 model = GetModelMatrix();
-            Draw(model, view, projection);
+            Shader.Use();
+
+            Shader.SetMatrix4("model", GetModelMatrix());
+            Shader.SetMatrix4("view", view);
+            Shader.SetMatrix4("projection", projection);
+
+            Shader.SetVector4("inputColor", Color);
+
+            Bind();
+            GL.DrawArrays(DrawingMode, 0, Vertices.Length / 3);
         }
 
-        public virtual void Draw(Matrix4 model, Matrix4 view, Matrix4 projection)
+        public void Draw(Matrix4 model, Matrix4 view, Matrix4 projection)
         {
             Shader.Use();
 

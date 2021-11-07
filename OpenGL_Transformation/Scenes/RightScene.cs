@@ -1,5 +1,4 @@
-﻿using TransformationApplication.Scenes.Base;
-using TransformationApplication.Base;
+﻿using TransformationApplication.Base;
 using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.Mathematics;
 
@@ -10,24 +9,20 @@ using System.Collections.Generic;
 
 namespace TransformationApplication.Scenes
 {
-    public class RightScene : IRenderable
+    public class RightScene
     {
-        private float _width;
-        private float _height;
-
         private readonly ViewCamera _userCamera;
+        private readonly List<IVisible> _visibleObjects;
 
-        private readonly List<VisibleObject> _visibleObjects;
+        public float AspectRatio { get; set; }
 
-        private float AspectRatio => _width / _height;
-
-        public RightScene(ViewCamera userCamera, List<VisibleObject> objects)
+        public RightScene(ViewCamera userCamera, List<IVisible> objects)
         {
             _visibleObjects = objects;
             _userCamera = userCamera;
         }
         
-        public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)
+        public void Render(Transformation cameraTransformation, Transformation modelTransformation)
         {
             Transformation cameraTransformationCopy = cameraTransformation.Clone();
             Transformation modelTransformationCopy = modelTransformation.Clone();
@@ -36,30 +31,21 @@ namespace TransformationApplication.Scenes
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             _userCamera.AspectRatio = AspectRatio;
-            _userCamera.Fov = 70.0f;
-
             float yaw = MathHelper.DegreesToRadians(_userCamera.Yaw);
             float pitch = MathHelper.DegreesToRadians(_userCamera.Pitch);
+            Vector3 userCameraPosition = new(_userCamera.X, _userCamera.Y, -_userCamera.Z);
 
-            view = Matrix4.Identity * Matrix4.CreateRotationY(yaw) * Matrix4.CreateRotationX(pitch) * Matrix4.CreateTranslation(0.0f, 0.0f, -20.0f);
+            Matrix4 model = TransformationMatrix.GetTransformationMatrix(modelTransformationCopy);
+            Matrix4 view = Matrix4.Identity * Matrix4.CreateRotationY(yaw) * Matrix4.CreateRotationX(pitch) * Matrix4.CreateTranslation(userCameraPosition);
             Matrix4 projection = _userCamera.GetProjectionMatrix(1.0f, 100.0f);
 
             // model
-            _visibleObjects[0].UpdateTransformation(modelTransformationCopy);
-            _visibleObjects[0].Draw(view, projection);
-
-            _visibleObjects[2].UpdateTransformation(modelTransformationCopy);
-            _visibleObjects[2].Draw(view, projection);
+            _visibleObjects[2].Draw(model, view, projection);
+            _visibleObjects[0].Draw(model, view, projection);
 
             // camera
-            _visibleObjects[1].UpdateTransformation(cameraTransformationCopy);
-            _visibleObjects[1].Draw(view, projection);
-        }
-
-        public void UpdateAspectRatio(float width, float height)
-        {
-            _width = width;
-            _height = height;
+            model = TransformationMatrix.GetTransformationMatrix(cameraTransformationCopy);
+            _visibleObjects[1].Draw(model, view, projection);
         }
     }
 }

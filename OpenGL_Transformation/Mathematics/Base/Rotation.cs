@@ -1,15 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using OpenTK.Mathematics;
-
 namespace TransformationApplication.Mathematics.Base
 {
     public class Rotation : INotifyPropertyChanged
     {
-        private const float MinBorder = -270.0f;
-        private const float MaxBorder = 180.0f;
-
         private float _pitch;
         private float _yaw;
         private float _roll;

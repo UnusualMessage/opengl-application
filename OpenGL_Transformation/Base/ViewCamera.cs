@@ -9,25 +9,27 @@ namespace TransformationApplication.Base
     {
         private float _fov = MathHelper.PiOver4;
 
-        public ViewCamera(Transformation transformation)
+        public ViewCamera(Transformation transformation, float fov) : this(fov)
         {
             Transformation = transformation.Clone();
-            Front = -Vector3.UnitZ;
         }
 
-        public ViewCamera()
+        public ViewCamera(float fov) 
         {
-            Front = -Vector3.UnitZ;
+            _fov = MathHelper.DegreesToRadians(fov);
         }
 
-        public float AspectRatio { private get; set; } = 1.0f;
+        public float AspectRatio { private get; set; } = 1.5f;
 
         public float Fov
         {
             get => MathHelper.RadiansToDegrees(_fov);
             set
             {
-                float angle = MathHelper.Clamp(value, 1.0f, 90.0f);
+                float minFov = 1.0f;
+                float maxFov = 90.0f;
+
+                float angle = MathHelper.Clamp(value, minFov, maxFov);
                 _fov = MathHelper.DegreesToRadians(angle);
             }
         }

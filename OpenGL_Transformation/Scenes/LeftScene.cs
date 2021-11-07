@@ -1,5 +1,4 @@
-﻿using TransformationApplication.Scenes.Base;
-using TransformationApplication.Base;
+﻿using TransformationApplication.Base;
 using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.Mathematics;
 
@@ -10,18 +9,17 @@ using System.Collections.Generic;
 
 namespace TransformationApplication.Scenes
 {
-    public class LeftScene : IRenderable
+    public class LeftScene
     {
-        private float _width;
-        private float _height;
+        private const float Near = 1.0f;
+        private const float Far = 10.1f;
 
-        private readonly ViewCamera _userCamera = new();
+        private readonly ViewCamera _userCamera = new(45.0f);
+        private readonly List<IVisible> _visibleObjects;
 
-        private readonly List<VisibleObject> _visibleObjects;
+        public float AspectRatio { get; set; }
 
-        private float AspectRatio => _width / _height;
-
-        public LeftScene(List<VisibleObject> objects)
+        public LeftScene(List<IVisible> objects)
         {
             _visibleObjects = objects;
 
@@ -31,30 +29,24 @@ namespace TransformationApplication.Scenes
 
         public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)
         {
-            Transformation cameraTransformationCopy = cameraTransformation.Clone();
-            Transformation modelTransformationCopy = modelTransformation.Clone();
-
             GL.ClearColor(new Color4(0.1f, 0.1f, 0.1f, 1.0f));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            Transformation cameraTransformationCopy = cameraTransformation.Clone();
+            Transformation modelTransformationCopy = modelTransformation.Clone();
+
             _userCamera.AspectRatio = AspectRatio;
             cameraTransformationCopy.Rotation.Yaw += -90.0f;
-
             _userCamera.UpdateTransformation(cameraTransformationCopy);
+
+            Matrix4 model = TransformationMatrix.GetTransformationMatrix(modelTransformationCopy);
             view = _userCamera.GetViewMatrix();
-            Matrix4 projection = _userCamera.GetProjectionMatrix(1.0f, 10.1f);
+            Matrix4 projection = _userCamera.GetProjectionMatrix(Near, Far);
 
-            foreach (VisibleObject visibleObject in _visibleObjects)
+            foreach (IVisible visibleObject in _visibleObjects)
             {
-                visibleObject.UpdateTransformation(modelTransformationCopy);
-                visibleObject.Draw(view, projection);
+                visibleObject.Draw(model, view, projection);
             }
-        }
-
-        public void UpdateAspectRatio(float width, float height)
-        {
-            _width = width;
-            _height = height;
         }
     }
 }

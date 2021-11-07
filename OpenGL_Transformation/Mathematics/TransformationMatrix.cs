@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using TransformationApplication.Mathematics.Base;
+
+using System.Collections.Generic;
 
 using OpenTK.Mathematics;
 

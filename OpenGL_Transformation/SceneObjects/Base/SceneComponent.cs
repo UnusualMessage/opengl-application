@@ -12,6 +12,10 @@ namespace TransformationApplication.SceneObjects.Base
         private Vector3 _up = Vector3.UnitY;
         private Vector3 _right = Vector3.UnitX;
 
+        protected Vector3 Front => _front;
+        protected Vector3 Up => _up;
+        protected Vector3 Right => _right;
+
         private Transformation _transformation = new();
 
         protected Transformation Transformation
@@ -70,24 +74,6 @@ namespace TransformationApplication.SceneObjects.Base
                 Transformation.Rotation.Roll = value;
                 UpdateVectors();
             }
-        }
-
-        protected Vector3 Front
-        {
-            get => _front;
-            set => _front = value;
-        }
-
-        protected Vector3 Up
-        {
-            get => _up;
-            set => _up = value;
-        }
-
-        protected Vector3 Right
-        {
-            get => _right;
-            set => _right = value;
         }
 
         public void UpdateTransformation(Transformation transformation)

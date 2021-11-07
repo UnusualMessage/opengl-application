@@ -1,5 +1,4 @@
-﻿using TransformationApplication.Scenes.Base;
-using TransformationApplication.Scenes;
+﻿using TransformationApplication.Scenes;
 using TransformationApplication.Mathematics;
 using TransformationApplication.Mathematics.Base;
 using TransformationApplication.SceneObjects.Base;
@@ -27,16 +26,17 @@ namespace TransformationApplication
         public Transformation ModelTransformation { get; }
         public Transformation CameraTransformation { get; }
 
-        private readonly List<VisibleObject> _visibleObjects = new();
+        private readonly List<IVisible> _leftSceneVisibleObjects = new();
+        private readonly List<IVisible> _rightScenevisibleObjects = new();
 
-        private readonly IRenderable _leftScene;
-        private readonly IRenderable _rightScene;
+        private readonly LeftScene _leftScene;
+        private readonly RightScene _rightScene;
 
-        private readonly ObservableCollection<MatrixRow> _modelMatrixGrid;
-        private readonly ObservableCollection<MatrixRow> _viewMatrixGrid;
-        private readonly ObservableCollection<MatrixRow> _modelViewMatrixGrid;
+        private readonly ObservableCollection<MatrixRow> _modelMatrixGrid = new();
+        private readonly ObservableCollection<MatrixRow> _viewMatrixGrid = new();
+        private readonly ObservableCollection<MatrixRow> _modelViewMatrixGrid = new();
 
-        private readonly ViewCamera _userCamera;
+        private readonly ViewCamera _rightSceneCamera = new(60.0f);
         private Vector2 _lastMousePosition;
         private bool _firstMove = true;
         private bool _mouseDown = false;
@@ -57,18 +57,23 @@ namespace TransformationApplication
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f)));
-            _visibleObjects.Add(new VisibleObject(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.GetParallelepiped(0.5f, 0.3f, 0.2f)));
-            _visibleObjects.Add(new Field(new Shader(VertexShaderPath, FragmentShaderPath), Vertices.FieldLine));
+            Shader common = new(VertexShaderPath, FragmentShaderPath);
+            IVisible field = new Field(common, Vertices.FieldLine);
+            IVisible model = new SimpleObject(common, Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f));
+            IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));
 
-            _userCamera = new();
+            _leftSceneVisibleObjects.Add(field);
+            _leftSceneVisibleObjects.Add(model);
 
-            _leftScene = new LeftScene(_visibleObjects);
-            _rightScene = new RightScene(_userCamera, _visibleObjects);
+            _rightScenevisibleObjects.Add(field);
+            _rightScenevisibleObjects.Add(camera);
+            _rightScenevisibleObjects.Add(model);
 
-            _modelMatrixGrid = new();
-            _viewMatrixGrid = new();
-            _modelViewMatrixGrid = new();
+            _rightSceneCamera.Pitch = 45.0f;
+            _rightSceneCamera.Z = 20.0f;
+
+            _leftScene = new LeftScene(_leftSceneVisibleObjects);
+            _rightScene = new RightScene(_rightSceneCamera, _rightScenevisibleObjects);
 
             BindMatrices();
         }
@@ -102,7 +107,7 @@ namespace TransformationApplication
 
         private void LeftGlControlOnRender(TimeSpan delta)
         {
-            _leftScene.UpdateAspectRatio((float)LeftGlControl.ActualWidth, (float)LeftGlControl.ActualHeight);
+            _leftScene.AspectRatio = (float)LeftGlControl.ActualWidth / (float)LeftGlControl.ActualHeight;
             _leftScene.Render(CameraTransformation, ModelTransformation, out Matrix4 view);
             Matrix4 model = TransformationMatrix.GetTransformationMatrix(ModelTransformation);
 
@@ -113,8 +118,8 @@ namespace TransformationApplication
 
         private void RightGlControlOnRender(TimeSpan delta)
         {
-            _rightScene.UpdateAspectRatio((float)RightGlControl.ActualWidth, (float)RightGlControl.ActualHeight);
-            _rightScene.Render(CameraTransformation, ModelTransformation, out _);
+            _rightScene.AspectRatio = (float)RightGlControl.ActualWidth / (float)RightGlControl.ActualHeight;
+            _rightScene.Render(CameraTransformation, ModelTransformation);
         }
 
         private void RightGlControlMouseMove(object sender, MouseEventArgs e)
@@ -140,8 +145,9 @@ namespace TransformationApplication
 
                 _lastMousePosition = new Vector2(mouseX, mouseY);
 
-                _userCamera.Yaw += xDelta * 0.2f;
-                _userCamera.Pitch += yDelta * 0.2f;
+                float sensitivity = 0.3f;
+                _rightSceneCamera.Yaw += xDelta * sensitivity;
+                _rightSceneCamera.Pitch += yDelta * sensitivity;
             }
         }
 

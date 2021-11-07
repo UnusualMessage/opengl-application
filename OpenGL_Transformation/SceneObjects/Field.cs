@@ -5,47 +5,47 @@ using OpenTK.Mathematics;
 
 namespace TransformationApplication.SceneObjects
 {
-    public class Field : VisibleObject
+    public class Field : SceneComponent, IVisible
     {
-        private readonly VisibleObject _cell;
+        private readonly SimpleObject _line;
 
-        public Field(Shader shader, float[] vertices) : base(shader, vertices)
+        public Field(Shader shader, float[] vertices)
         {
-            _cell = new(shader, vertices);
-            _cell.DrawingMode = OpenTK.Graphics.OpenGL4.PrimitiveType.Lines;
+            _line = new(shader, vertices);
+            _line.DrawingMode = OpenTK.Graphics.OpenGL4.PrimitiveType.Lines;
         }
 
-        public override void Draw(Matrix4 view, Matrix4 projection)
+        public void Draw(Matrix4 model, Matrix4 view, Matrix4 projection)
         {
-            _cell.ResetTransformation();
-            _cell.Color = new(0.2f, 0.2f, 0.2f, 1.0f);
+            _line.ResetTransformation();
+            _line.Color = new(0.2f, 0.2f, 0.2f, 1.0f);
             for (float i = -10.0f; i <= 10.0f; ++i)
             {
-                _cell.X = i;
+                _line.X = i;
                 if (i != 0.0f)
                 {
-                    _cell.Draw(view, projection);
+                    _line.Draw(view, projection);
                 }
             }
-            _cell.X = 0.0f;
-            _cell.Color = new(0.0f, 0.0f, 0.4f, 1.0f);
-            _cell.Draw(view, projection);
+            _line.X = 0.0f;
+            _line.Color = new(0.0f, 0.0f, 0.4f, 1.0f);
+            _line.Draw(view, projection);
 
-            _cell.ResetTransformation();
+            _line.ResetTransformation();
 
-            _cell.Yaw = 90.0f;
-            _cell.Color = new(0.2f, 0.2f, 0.2f, 1.0f);
+            _line.Yaw = 90.0f;
+            _line.Color = new(0.2f, 0.2f, 0.2f, 1.0f);
             for (float i = -10.0f; i <= 10.0f; ++i)
             {
-                _cell.Z = i;
+                _line.Z = i;
                 if (i != 0.0f)
                 {
-                    _cell.Draw(view, projection);
+                    _line.Draw(view, projection);
                 }
             }
-            _cell.Z = 0.0f;
-            _cell.Color = new(0.4f, 0.0f, 0.0f, 1.0f);
-            _cell.Draw(view, projection);
+            _line.Z = 0.0f;
+            _line.Color = new(0.4f, 0.0f, 0.0f, 1.0f);
+            _line.Draw(view, projection);
         }
     }
 }

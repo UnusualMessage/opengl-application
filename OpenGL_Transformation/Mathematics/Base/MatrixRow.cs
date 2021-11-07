@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace TransformationApplication.Mathematics
+namespace TransformationApplication.Mathematics.Base
 {
     public class MatrixRow : INotifyPropertyChanged
     {
