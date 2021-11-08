@@ -52,7 +52,7 @@ namespace TransformationApplication
             {
                 MajorVersion = 4,
                 MinorVersion = 1,
-                RenderContinuously = true
+                RenderContinuously = true,
             };
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);

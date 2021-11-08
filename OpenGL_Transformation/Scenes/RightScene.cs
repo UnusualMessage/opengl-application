@@ -40,16 +40,16 @@ namespace TransformationApplication.Scenes
             Matrix4 projection = _userCamera.GetProjectionMatrix(1.0f, 100.0f);
 
             // model
+            _visibleObjects[3].Draw(model, view, projection);
             _visibleObjects[2].Draw(model, view, projection);
             _visibleObjects[0].Draw(model, view, projection);
-            _visibleObjects[3].Draw(model, view, projection);
 
             // camera
             cameraTransformationCopy.Rotation.Pitch = -cameraTransformationCopy.Rotation.Pitch;
             cameraTransformationCopy.Rotation.Roll = -cameraTransformationCopy.Rotation.Roll;
             model = TransformationMatrix.GetTransformationMatrix(cameraTransformationCopy);
+            _visibleObjects[4].Draw(Matrix4.CreateRotationY(MathHelper.Pi) * model, view, projection);
             _visibleObjects[1].Draw(model, view, projection);
-            _visibleObjects[4].Draw(model, view, projection);
         }
     }
 }

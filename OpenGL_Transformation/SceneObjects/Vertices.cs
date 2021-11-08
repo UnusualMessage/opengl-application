@@ -4,16 +4,6 @@ namespace TransformationApplication.SceneObjects
 {
     public static class Vertices
     {
-        public static readonly float[] Quad =
-        {
-            -0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f,  0.5f,
-             0.5f, -0.5f,  0.5f,
-            -0.5f, -0.5f,  0.5f,
-            -0.5f, -0.5f, -0.5f,
-        };
-
         public static readonly float[] FieldLine =
         {
             0.0f, 0.0f, -10.0f,
@@ -47,7 +37,15 @@ namespace TransformationApplication.SceneObjects
             float farHeight = nearHeight;
             float farWidth = nearWidth;
 
-            float[] template = { };
+            float[] template =
+            {
+                -farWidth, -farHeight, 0,
+                 farWidth, -farHeight, 0,
+                 farWidth,  farHeight, 0,
+                 farWidth,  farHeight, 0,
+                -farWidth,  farHeight, 0,
+                -farWidth, -farHeight, 0,
+            };
             return template;
         }
 
