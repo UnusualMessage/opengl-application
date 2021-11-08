@@ -109,9 +109,9 @@ namespace TransformationApplication.SceneObjects.Base
             float pitch = MathHelper.DegreesToRadians(Pitch);
             float yaw = MathHelper.DegreesToRadians(Yaw);
 
-            _front.X = MathF.Cos(pitch) * MathF.Cos(yaw);
+            _front.X = MathF.Cos(pitch) * MathF.Sin(yaw);
             _front.Y = MathF.Sin(pitch);
-            _front.Z = MathF.Cos(pitch) * MathF.Sin(yaw);
+            _front.Z = MathF.Cos(pitch) * MathF.Cos(yaw);
             _front = Vector3.Normalize(_front);
         }
     }

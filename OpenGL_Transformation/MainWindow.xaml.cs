@@ -61,6 +61,8 @@ namespace TransformationApplication
             IVisible field = new Field(common, Vertices.FieldLine);
             IVisible model = new SimpleObject(common, Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f));
             IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));
+            IVisible modelAxis = new Axis(common, 3.0f);
+            IVisible cameraAxis = new Axis(common, 1.0f);
 
             _leftSceneVisibleObjects.Add(field);
             _leftSceneVisibleObjects.Add(model);
@@ -68,6 +70,8 @@ namespace TransformationApplication
             _rightScenevisibleObjects.Add(field);
             _rightScenevisibleObjects.Add(camera);
             _rightScenevisibleObjects.Add(model);
+            _rightScenevisibleObjects.Add(modelAxis);
+            _rightScenevisibleObjects.Add(cameraAxis);
 
             _rightSceneCamera.Pitch = 45.0f;
             _rightSceneCamera.Z = 20.0f;

@@ -42,10 +42,12 @@ namespace TransformationApplication.Scenes
             // model
             _visibleObjects[2].Draw(model, view, projection);
             _visibleObjects[0].Draw(model, view, projection);
+            _visibleObjects[3].Draw(model, view, projection);
 
             // camera
             model = TransformationMatrix.GetTransformationMatrix(cameraTransformationCopy);
             _visibleObjects[1].Draw(model, view, projection);
+            _visibleObjects[4].Draw(model, view, projection);
         }
     }
 }
