@@ -17,6 +17,7 @@ namespace TransformationApplication.Base
         public ViewCamera(float fov) 
         {
             _fov = MathHelper.DegreesToRadians(fov);
+            Front = -Vector3.UnitZ;
         }
 
         public float AspectRatio { private get; set; } = 1.5f;

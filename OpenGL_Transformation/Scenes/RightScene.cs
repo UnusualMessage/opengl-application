@@ -45,6 +45,8 @@ namespace TransformationApplication.Scenes
             _visibleObjects[3].Draw(model, view, projection);
 
             // camera
+            cameraTransformationCopy.Rotation.Pitch = -cameraTransformationCopy.Rotation.Pitch;
+            cameraTransformationCopy.Rotation.Roll = -cameraTransformationCopy.Rotation.Roll;
             model = TransformationMatrix.GetTransformationMatrix(cameraTransformationCopy);
             _visibleObjects[1].Draw(model, view, projection);
             _visibleObjects[4].Draw(model, view, projection);
