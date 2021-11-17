@@ -15,7 +15,7 @@ namespace TransformationApplication.SceneObjects.Base
         private readonly int _vertexArrayObject;
 
         public Shader Shader { get; }
-        public float[] Vertices { get; }
+        public float[] Vertices { get; private set; }
 
         public SimpleObject(Shader shader, float[] vertices)
         {
@@ -30,13 +30,25 @@ namespace TransformationApplication.SceneObjects.Base
                 BufferTarget.ArrayBuffer,
                 Vertices.Length * sizeof(float),
                 Vertices,
-                BufferUsageHint.StaticDraw);
+                BufferUsageHint.DynamicDraw);
 
             _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
 
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
+        }
+
+        public void SetVertices(float[] vertices)
+        {
+            Vertices = vertices;
+
+            Bind();
+            GL.BufferData(
+                BufferTarget.ArrayBuffer,
+                Vertices.Length * sizeof(float),
+                Vertices,
+                BufferUsageHint.DynamicDraw);
         }
 
         private void Bind()

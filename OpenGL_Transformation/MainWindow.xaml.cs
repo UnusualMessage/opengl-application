@@ -63,15 +63,18 @@ namespace TransformationApplication
             IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));
             IVisible modelAxis = new Axis(common, 3.0f);
             IVisible cameraAxis = new Axis(common, 1.0f);
+            IVisible cameraFrustum = new Frustum(common, 1.0f, 10.1f);
 
             _leftSceneVisibleObjects.Add(field);
             _leftSceneVisibleObjects.Add(model);
+            _leftSceneVisibleObjects.Add(modelAxis);
 
             _rightScenevisibleObjects.Add(field);
             _rightScenevisibleObjects.Add(camera);
             _rightScenevisibleObjects.Add(model);
             _rightScenevisibleObjects.Add(modelAxis);
             _rightScenevisibleObjects.Add(cameraAxis);
+            _rightScenevisibleObjects.Add(cameraFrustum);
 
             _rightSceneCamera.Pitch = 45.0f;
             _rightSceneCamera.Z = 20.0f;
@@ -153,6 +156,11 @@ namespace TransformationApplication
                 _rightSceneCamera.Yaw += xDelta * sensitivity;
                 _rightSceneCamera.Pitch += yDelta * sensitivity;
             }
+        }
+
+        private void RightGlControlMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+
         }
 
         private void RightGlControlMouseDown(object sender, MouseButtonEventArgs e)

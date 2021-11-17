@@ -19,7 +19,6 @@ namespace TransformationApplication.SceneObjects
         public void Draw(Matrix4 model, Matrix4 view, Matrix4 projection)
         {
             GL.Enable(EnableCap.LineSmooth);
-            GL.DepthFunc(DepthFunction.Always);
 
             _axisLine.Color = Color4.Blue;
             _axisLine.Draw(model, view, projection);
@@ -31,7 +30,6 @@ namespace TransformationApplication.SceneObjects
             _axisLine.Draw(Matrix4.CreateRotationX(-MathHelper.PiOver2) * model, view, projection);
 
             GL.Disable(EnableCap.LineSmooth);
-            GL.DepthFunc(DepthFunction.Lequal);
         }
 
         private static float[] GetAxisLine(float length)

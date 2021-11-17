@@ -4,9 +4,9 @@
     {
         public struct Point
         {
-            private float _x;
-            private float _y;
-            private float _z;
+            private readonly float _x;
+            private readonly float _y;
+            private readonly float _z;
 
             public float X => _x;
             public float Y => _y;

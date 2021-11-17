@@ -24,7 +24,6 @@ namespace TransformationApplication.Scenes
             _visibleObjects = objects;
 
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.Blend);
         }
 
         public void Render(Transformation cameraTransformation, Transformation modelTransformation, out Matrix4 view)

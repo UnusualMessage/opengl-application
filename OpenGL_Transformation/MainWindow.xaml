@@ -51,6 +51,7 @@
             Mouse.MouseDown="RightGlControlMouseDown"
             Mouse.MouseUp="RightGlControlMouseUp"
             Mouse.MouseLeave="RightGlControlMouseLeave"
+            Mouse.MouseWheel="RightGlControlMouseWheel"
             Grid.Column="1"
             Grid.Row="0"/>
 

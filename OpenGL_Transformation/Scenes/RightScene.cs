@@ -50,6 +50,7 @@ namespace TransformationApplication.Scenes
             model = TransformationMatrix.GetTransformationMatrix(cameraTransformationCopy);
             _visibleObjects[4].Draw(Matrix4.CreateRotationY(MathHelper.Pi) * model, view, projection);
             _visibleObjects[1].Draw(model, view, projection);
+            _visibleObjects[5].Draw(model, view, projection);
         }
     }
 }
