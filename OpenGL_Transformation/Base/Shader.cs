@@ -2,7 +2,6 @@
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace TransformationApplication.Base
 {
@@ -11,16 +10,14 @@ namespace TransformationApplication.Base
         private readonly Dictionary<string, int> _uniformLocations;
         private readonly int _handle;
 
-        public Shader(string vertexShaderPath, string fragmentShaderPath)
+        public Shader(string vertexSource, string fragmentSource)
         {
-            string shaderSource = File.ReadAllText(vertexShaderPath);
             int vertexShader = GL.CreateShader(ShaderType.VertexShader);
-            GL.ShaderSource(vertexShader, shaderSource);
+            GL.ShaderSource(vertexShader, vertexSource);
             CompileShader(vertexShader);
 
-            shaderSource = File.ReadAllText(fragmentShaderPath);
             int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-            GL.ShaderSource(fragmentShader, shaderSource);
+            GL.ShaderSource(fragmentShader, fragmentSource);
             CompileShader(fragmentShader);
 
             _handle = GL.CreateProgram();

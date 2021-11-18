@@ -18,8 +18,6 @@ namespace TransformationApplication
 {
     public partial class MainWindow : Window
     {
-        private const string VertexShaderPath = "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\VertexShader.vert";
-        private const string FragmentShaderPath = "C:\\dev\\TermWork\\OpenGL_Transformation\\OpenGL_Transformation\\Shaders\\FragmentShader.frag";
         private const float DefaultModelY = 1.0f;
         private const float DefaultCameraZ = 10.0f;
 
@@ -57,7 +55,10 @@ namespace TransformationApplication
             LeftGlControl.Start(settings);
             RightGlControl.Start(settings);
 
-            Shader common = new(VertexShaderPath, FragmentShaderPath);
+            string vertexShaderSource = Properties.Resources.VertexShader;
+            string fragmentShaderSource = Properties.Resources.FragmentShader;
+
+            Shader common = new(vertexShaderSource, fragmentShaderSource);
             IVisible field = new Field(common, Vertices.FieldLine);
             IVisible model = new SimpleObject(common, Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f));
             IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));

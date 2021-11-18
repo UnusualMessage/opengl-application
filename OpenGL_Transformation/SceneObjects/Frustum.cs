@@ -19,18 +19,20 @@ namespace TransformationApplication.SceneObjects
 
         public float Far { get; set; }
         public float Near { get; set; }
+        public float Fov { get; set; } = 45.0f;
+        public float AspectRatio { get; set; } = 1.55f;
 
         public Frustum(Shader shader, float near, float far)
         {
             Far = far;
             Near = near;
 
-            _nearPlane = new(shader, GetNearPlane(1.55f, 45.0f, near));
-            _farPlane = new(shader, GetFarPlane(1.55f, 45.0f, near, far));
-            _leftLine = new(shader, GetLeftLine(1.55f, 45.0f, near, far));
-            _rightLine = new(shader, GetRightLine(1.55f, 45.0f, near, far));
-            _nearBorder = new(shader, GetNearPlaneBorder(1.55f, 45.0f, near, far));
-            _farBorder = new(shader, GetFarPlaneBorder(1.55f, 45.0f, near, far));
+            _nearPlane = new(shader, GetNearPlane(AspectRatio, Fov, Near));
+            _farPlane = new(shader, GetFarPlane(AspectRatio, Fov, Near, Far));
+            _leftLine = new(shader, GetLeftLine(AspectRatio, Fov, Near, Far));
+            _rightLine = new(shader, GetRightLine(AspectRatio, Fov, Near, Far));
+            _nearBorder = new(shader, GetNearPlaneBorder(AspectRatio, Fov, Near, Far));
+            _farBorder = new(shader, GetFarPlaneBorder(AspectRatio, Fov, Near, Far));
 
             _nearPlane.Color = new(0.3f, 0.3f, 0.3f, 0.5f);
             _farPlane.Color = new(0.3f, 0.3f, 0.3f, 0.5f);

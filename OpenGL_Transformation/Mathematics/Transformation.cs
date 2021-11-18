@@ -15,8 +15,8 @@ namespace TransformationApplication.Mathematics
 
         public Transformation(Rotation rotation, Position translation)
         {
-            Rotation = rotation;
-            Position = translation;
+            Rotation = rotation.Clone();
+            Position = translation.Clone();
         }
 
         private Transformation(Transformation transformation)
