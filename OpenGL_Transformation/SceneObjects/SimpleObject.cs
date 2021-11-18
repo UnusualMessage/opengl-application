@@ -1,10 +1,12 @@
 ﻿using TransformationApplication.Base;
 using TransformationApplication.Mathematics;
 
+using TransformationApplication.SceneObjects.Base;
+
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace TransformationApplication.SceneObjects.Base
+namespace TransformationApplication.SceneObjects
 {
     public class SimpleObject : SceneComponent, IVisible
     {

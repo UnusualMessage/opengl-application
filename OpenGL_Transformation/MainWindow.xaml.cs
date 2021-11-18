@@ -3,6 +3,7 @@ using TransformationApplication.Mathematics;
 using TransformationApplication.Mathematics.Base;
 using TransformationApplication.SceneObjects.Base;
 using TransformationApplication.SceneObjects;
+using TransformationApplication.SceneObjects.CompoundObjects;
 using TransformationApplication.Base;
 
 using System;
@@ -64,7 +65,7 @@ namespace TransformationApplication
             IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));
             IVisible modelAxis = new Axis(common, 3.0f);
             IVisible cameraAxis = new Axis(common, 1.0f);
-            IVisible cameraFrustum = new Frustum(common, 1.0f, 10.1f);
+            IVisible cameraFrustum = new Frustum(common);
 
             _leftSceneVisibleObjects.Add(field);
             _leftSceneVisibleObjects.Add(model);

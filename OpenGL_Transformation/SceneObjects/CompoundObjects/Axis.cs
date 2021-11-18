@@ -4,7 +4,7 @@ using TransformationApplication.SceneObjects.Base;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace TransformationApplication.SceneObjects
+namespace TransformationApplication.SceneObjects.CompoundObjects
 {
     public class Axis : SceneComponent, IVisible
     {
