@@ -60,7 +60,7 @@ namespace TransformationApplication
             string fragmentShaderSource = Properties.Resources.FragmentShader;
 
             Shader common = new(vertexShaderSource, fragmentShaderSource);
-            IVisible field = new Field(common, Vertices.FieldLine);
+            IVisible field = new Field(common, Vertices.GetLine(new VertPoint(0, 0, -10.0f), new VertPoint(0, 0, 10.0f)));
             IVisible model = new SimpleObject(common, Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f));
             IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));
             IVisible modelAxis = new Axis(common, 3.0f);
@@ -162,7 +162,28 @@ namespace TransformationApplication
 
         private void RightGlControlMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            float minCameraZ = 5.0f;
+            float maxCameraZ = 30.0f;
+            float zoomTick = 1.0f;
 
+            if (e.Delta > 0)
+            {
+                if (_rightSceneCamera.Z <= minCameraZ)
+                {
+                    return;
+                }
+
+                _rightSceneCamera.Z -= zoomTick;
+            }
+            else
+            {
+                if (_rightSceneCamera.Z >= maxCameraZ)
+                {
+                    return;
+                }
+
+                _rightSceneCamera.Z += zoomTick;
+            }
         }
 
         private void RightGlControlMouseDown(object sender, MouseButtonEventArgs e)

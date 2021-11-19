@@ -1,32 +1,22 @@
 ﻿namespace TransformationApplication.SceneObjects
 {
+    public struct VertPoint
+    {
+        public float X { get; }
+        public float Y { get; }
+        public float Z { get; }
+
+        public VertPoint(float x, float y, float z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+    }
+
     public static class Vertices
     {
-        public struct Point
-        {
-            private readonly float _x;
-            private readonly float _y;
-            private readonly float _z;
-
-            public float X => _x;
-            public float Y => _y;
-            public float Z => _z;
-
-            public Point(float x, float y, float z)
-            {
-                _x = x;
-                _y = y;
-                _z = z;
-            }
-        }
-
-        public static readonly float[] FieldLine =
-        {
-            0.0f, 0.0f, -10.0f,
-            0.0f, 0.0f, 10.0f,
-        };
-
-        public static float[] GetLine(Point first, Point second)
+        public static float[] GetLine(VertPoint first, VertPoint second)
         {
             float[] template =
             {

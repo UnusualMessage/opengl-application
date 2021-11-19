@@ -7,10 +7,8 @@
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="765" Width="1280"
-        MinHeight="765" MinWidth="1000"
-        WindowStyle="SingleBorderWindow"
-        ResizeMode="CanResize">
+        Title="MainWindow" Height="800" Width="1280"
+        MinHeight="800" MinWidth="1000">
 
     <Window.Resources>
         <Style x:Key="PositionSlider">
@@ -30,8 +28,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*"></RowDefinition>
-            <RowDefinition Height="19*"></RowDefinition>
+            <RowDefinition Height="423*"></RowDefinition>
+            <RowDefinition Height="286*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -77,8 +75,8 @@
                         <ColumnDefinition Width="33*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="24*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="37*"/>
+                        <RowDefinition Height="6*"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Vertical"
@@ -143,8 +141,8 @@
                     <Button Content="Сбросить"
                             FontSize="20"
                             Click="CameraResetClick" 
-                            Grid.Column="0" Grid.ColumnSpan="2"
-                            Grid.Row="1" Margin="50,2,17,0"/>
+                            Grid.Column="0" Grid.ColumnSpan="3"
+                            Grid.Row="1" Margin="50,2,50,0"/>
                 </Grid>
             </GroupBox>
 
@@ -161,8 +159,8 @@
                         <ColumnDefinition Width="33*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="24*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="37*"/>
+                        <RowDefinition Height="6*"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Vertical"
