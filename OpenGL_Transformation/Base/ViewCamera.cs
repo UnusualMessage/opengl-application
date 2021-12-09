@@ -20,7 +20,7 @@ namespace TransformationApplication.Base
             Front = -Vector3.UnitZ;
         }
 
-        public float AspectRatio { private get; set; } = 1.5f;
+        public float AspectRatio { private get; set; } = 1.55f;
 
         public float Fov
         {

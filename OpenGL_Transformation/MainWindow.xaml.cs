@@ -38,7 +38,7 @@ namespace TransformationApplication
         private readonly ViewCamera _rightSceneCamera = new(60.0f);
         private Vector2 _lastMousePosition;
         private bool _firstMove = true;
-        private bool _mouseDown = false;
+        private bool _mouseDown;
 
         public MainWindow()
         {
@@ -60,7 +60,7 @@ namespace TransformationApplication
             string fragmentShaderSource = Properties.Resources.FragmentShader;
 
             Shader common = new(vertexShaderSource, fragmentShaderSource);
-            IVisible field = new Field(common, Vertices.GetLine(new VertPoint(0, 0, -10.0f), new VertPoint(0, 0, 10.0f)));
+            IVisible field = new Field(common, Vertices.GetLine(new Vertex(0, 0, -10.0f), new Vertex(0, 0, 10.0f)));
             IVisible model = new SimpleObject(common, Vertices.GetParallelepiped(1.0f, 1.0f, 1.0f));
             IVisible camera = new SimpleObject(common, Vertices.GetParallelepiped(0.5f, 0.4f, 0.15f));
             IVisible modelAxis = new Axis(common, 3.0f);
@@ -188,11 +188,15 @@ namespace TransformationApplication
 
         private void RightGlControlMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _mouseDown = e.LeftButton == MouseButtonState.Pressed;
-            _firstMove = true;
+            UpdateMouseState(e);
         }
 
         private void RightGlControlMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            UpdateMouseState(e);
+        }
+
+        private void UpdateMouseState(MouseButtonEventArgs e)
         {
             _mouseDown = e.LeftButton == MouseButtonState.Pressed;
             _firstMove = true;

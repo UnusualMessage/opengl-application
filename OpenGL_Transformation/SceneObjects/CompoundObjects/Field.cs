@@ -8,8 +8,8 @@ namespace TransformationApplication.SceneObjects.CompoundObjects
     public class Field : SceneComponent, IVisible
     {
         private readonly Color4 _commonLineColor = new(0.2f, 0.2f, 0.2f, 1.0f);
-        private readonly Color4 _redLineColor = new(0.4f, 0.0f, 0.0f, 1.0f);
-        private readonly Color4 _blueLineColor = new(0.0f, 0.0f, 0.4f, 1.0f);
+        private readonly Color4 _redLineColor = new(0.5f, 0.0f, 0.0f, 1.0f);
+        private readonly Color4 _blueLineColor = new(0.0f, 0.0f, 0.5f, 1.0f);
 
         private readonly SimpleObject _line;
 

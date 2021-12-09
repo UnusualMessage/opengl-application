@@ -21,7 +21,7 @@ namespace TransformationApplication.Scenes
             _visibleObjects = objects;
             _userCamera = userCamera;
         }
-        
+
         public void Render(Transformation cameraTransformation, Transformation modelTransformation)
         {
             Transformation cameraTransformationCopy = cameraTransformation.Clone();
@@ -45,8 +45,6 @@ namespace TransformationApplication.Scenes
             _visibleObjects[0].Draw(model, view, projection);
 
             // camera
-            cameraTransformationCopy.Rotation.Pitch = -cameraTransformationCopy.Rotation.Pitch;
-            cameraTransformationCopy.Rotation.Roll = -cameraTransformationCopy.Rotation.Roll;
             model = TransformationMatrix.GetTransformationMatrix(cameraTransformationCopy);
             _visibleObjects[4].Draw(Matrix4.CreateRotationY(MathHelper.Pi) * model, view, projection);
             _visibleObjects[1].Draw(model, view, projection);

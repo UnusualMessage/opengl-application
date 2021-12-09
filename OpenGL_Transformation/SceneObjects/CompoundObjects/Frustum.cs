@@ -8,7 +8,7 @@ namespace TransformationApplication.SceneObjects.CompoundObjects
 {
     public class Frustum : SceneComponent, IVisible
     {
-        struct Planes
+        private struct Planes
         {
             public float FarWidth { get; }
             public float FarHeight { get; }
@@ -24,8 +24,8 @@ namespace TransformationApplication.SceneObjects.CompoundObjects
             }
         }
 
-        private readonly Color4 planeColor = new(0.3f, 0.3f, 0.3f, 0.5f);
-        private readonly Color4 planeBorderColor = new(0.3f, 0.3f, 0.3f, 1.0f);
+        private readonly Color4 _planeColor = new(0.3f, 0.3f, 0.3f, 0.5f);
+        private readonly Color4 _planeBorderColor = new(0.3f, 0.3f, 0.3f, 1.0f);
 
         private readonly SimpleObject _nearPlane;
         private readonly SimpleObject _farPlane;
@@ -50,19 +50,19 @@ namespace TransformationApplication.SceneObjects.CompoundObjects
             _nearBorder = new(shader, GetNearPlaneBorder());
             _farBorder = new(shader, GetFarPlaneBorder());
 
-            _nearPlane.Color = planeColor;
-            _farPlane.Color = planeColor;
+            _nearPlane.Color = _planeColor;
+            _farPlane.Color = _planeColor;
 
-            _leftLine.Color = planeBorderColor;
+            _leftLine.Color = _planeBorderColor;
             _leftLine.DrawingMode = PrimitiveType.Lines;
 
-            _rightLine.Color = planeBorderColor;
+            _rightLine.Color = _planeBorderColor;
             _rightLine.DrawingMode = PrimitiveType.Lines;
 
-            _nearBorder.Color = planeBorderColor;
+            _nearBorder.Color = _planeBorderColor;
             _nearBorder.DrawingMode = PrimitiveType.LineLoop;
 
-            _farBorder.Color = planeBorderColor;
+            _farBorder.Color = _planeBorderColor;
             _farBorder.DrawingMode = PrimitiveType.LineLoop;
         }
 

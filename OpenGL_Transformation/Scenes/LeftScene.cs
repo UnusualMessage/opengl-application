@@ -36,9 +36,6 @@ namespace TransformationApplication.Scenes
 
             _userCamera.AspectRatio = AspectRatio;
             cameraTransformationCopy.Rotation.Yaw += -90.0f;
-            cameraTransformationCopy.Rotation.Pitch = -cameraTransformationCopy.Rotation.Pitch;
-            cameraTransformationCopy.Rotation.Roll = -cameraTransformationCopy.Rotation.Roll;
-
             _userCamera.UpdateTransformation(cameraTransformationCopy);
 
             Matrix4 model = TransformationMatrix.GetTransformationMatrix(modelTransformationCopy);

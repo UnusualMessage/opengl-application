@@ -4,11 +4,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
-        
+        xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl" 
+        xmlns:base="clr-namespace:TransformationApplication" 
+        d:DataContext="{d:DesignInstance Type=base:MainWindow}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1280"
-        MinHeight="800" MinWidth="1000">
+        Title="Transformation" Height="750" Width="1280"
+        MinHeight="750" MinWidth="1280"
+        Background="#FFFFFF">
 
     <Window.Resources>
         <Style x:Key="PositionSlider">
@@ -28,19 +30,20 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="423*"></RowDefinition>
-            <RowDefinition Height="286*"></RowDefinition>
+            <RowDefinition Height="450*"></RowDefinition>
+            <RowDefinition Height="300"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <glWpfControl:GLWpfControl 
+        <Border Grid.Column="0" Grid.Row="0" Background="#2F2F2F">
+            <glWpfControl:GLWpfControl 
+            Width="640"
+            Height="420"
             x:Name="LeftGlControl" 
-            Render="LeftGlControlOnRender"
-            Grid.Column="0"
-            Grid.Row="0"/>
-
+            Render="LeftGlControlOnRender"/>
+        </Border>
         <glWpfControl:GLWpfControl 
             x:Name="RightGlControl" 
             Render="RightGlControlOnRender"
@@ -63,10 +66,12 @@
             </Grid.RowDefinitions>
 
             <GroupBox
-                Header="Camera"
-                Margin="5 5 5 5"
+                Margin="5 0 5 5"
                 Grid.Row="0"
                 Grid.Column="0">
+                <GroupBox.Header>
+                    <Label Content="Camera" FontSize="15"></Label>
+                </GroupBox.Header>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -138,7 +143,7 @@
                         <Label Content="{Binding ElementName=cameraZRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
                     </StackPanel>
 
-                    <Button Content="Сбросить"
+                    <Button Content="Reset"
                             FontSize="20"
                             Click="CameraResetClick" 
                             Grid.Column="0" Grid.ColumnSpan="3"
@@ -147,10 +152,12 @@
             </GroupBox>
 
             <GroupBox
-                Header="Model"
-                Margin="5 5 5 5"
+                Margin="5 0 5 5"
                 Grid.Row="0"
                 Grid.Column="1">
+                <GroupBox.Header>
+                    <Label Content="Model" FontSize="15"></Label>
+                </GroupBox.Header>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -166,7 +173,6 @@
                     <StackPanel Orientation="Vertical"
                                 Grid.Row="0"
                                 Grid.Column="0" Margin="10,10,0,6">
-                        <Viewbox></Viewbox>
                         <Label Content="X" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Position    Y" Margin="0 0 0 8" HorizontalAlignment="Right"/>
                         <Label Content="Z" Margin="0 0 0 20" HorizontalAlignment="Right"/>
@@ -222,7 +228,7 @@
                         <Label Content="{Binding ElementName=modelZRotSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 8"/>
                     </StackPanel>
 
-                    <Button Content="Сбросить"
+                    <Button Content="Reset"
                             FontSize="20"
                             Click="ModelResetClick" 
                             Grid.Column="0" Grid.ColumnSpan="3"
@@ -239,26 +245,34 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="12*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0*"/>
             </Grid.RowDefinitions>
 
             <GroupBox
-                Header="Model Matrix"
-                Margin="5,5,5,5"
+                Margin="5 0 5 5"
                 Grid.Row="0"
                 Grid.Column="0">
+                <GroupBox.Header>
+                    <Label Content="Model Matrix" FontSize="15"></Label>
+                </GroupBox.Header>
 
                 <ListView x:Name="modelMatrix"
                           FontSize="15"
                           Margin="3">
 
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="50" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
-                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
-                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="45"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="45"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="45"/>
                                 <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="45"/>
                             </GridView.Columns>
                         </GridView>
@@ -267,21 +281,29 @@
             </GroupBox>
 
             <GroupBox
-                Header="View Matrix"
-                Margin="5,5,5,5"
+                Margin="5 0 5 5"
                 Grid.Row="0"
                 Grid.Column="1">
+                <GroupBox.Header>
+                    <Label Content="View Matrix" FontSize="15"></Label>
+                </GroupBox.Header>
 
                 <ListView x:Name="viewMatrix"
                           FontSize="15"
                           Margin="3">
-
+                    
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="50" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
-                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
-                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="45"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="45"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="45"/>
                                 <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="45"/>
                             </GridView.Columns>
                         </GridView>
@@ -290,21 +312,29 @@
             </GroupBox>
 
             <GroupBox
-                Header="ModelView Matrix"
-                Margin="5,5,5,5"
+                Margin="5 0 5 5"
                 Grid.Row="0"
                 Grid.Column="2">
+                <GroupBox.Header>
+                    <Label Content="ModelView Matrix" FontSize="15"></Label>
+                </GroupBox.Header>
 
                 <ListView x:Name="modelViewMatrix"
                           FontSize="15"
                           Margin="3">
 
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="50" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="46"/>
-                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="46"/>
-                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="46"/>
+                                <GridViewColumn Header="Ox" DisplayMemberBinding="{Binding Path=First}" Width="45"/>
+                                <GridViewColumn Header="Oy" DisplayMemberBinding="{Binding Path=Second}" Width="45"/>
+                                <GridViewColumn Header="Oz" DisplayMemberBinding="{Binding Path=Third}" Width="45"/>
                                 <GridViewColumn Header="T" DisplayMemberBinding="{Binding Path=Fourth}" Width="45"/>
                             </GridView.Columns>
                         </GridView>
